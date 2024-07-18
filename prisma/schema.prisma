@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// user authentication / authorization tables
+model user {
+  id        String   @id @default(cuid())
+  email  String @unique // this is email
+  firstname  String?
+  lastname  String?
+  password  String?
+  user_id String?
+  provider String?
+  emailVerified Boolean? @default(false)
+  session session[]
+  password_reset_token password_reset_token[]
+  verification_code verification_code[]
+
+  inactive_at DateTime? 
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt  
+}
+
+model session {
+  id         String  @id @default(cuid())
+  userId    String
+  expiresAt DateTime
+  user       user    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt  
+}
+
+model password_reset_token {
+  id          String  @id @default(cuid())
+  userId      String
+  token_hash  String
+  expires_at  DateTime
+  user        user    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt  
+}
+
+model verification_code {
+  id          String  @id @default(cuid())
+  userId      String
+  code        String
+  expires_at  DateTime
+  user        user    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt  
+}
