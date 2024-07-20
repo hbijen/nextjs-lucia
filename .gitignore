@@ -27,6 +27,8 @@ yarn-error.log*
 
 # local env files
 .env*.local
+# we do not want this in git. but need it to perform prisma db push
+.env
 
 # vercel
 .vercel

@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { createPasswordResetToken, findUserByEmail } from "@/lib/service/auth-service";
 import { logger } from "@/lib/logger"
-import { ActionResult, SimpleForm } from "@/components/simple-form"
+import { ActionResult, SimpleForm } from "@/components/basic/simple-form"
 import { sendMail } from "@/lib/service/mail-service"
 import { renderAsync } from "@react-email/components"
 import {

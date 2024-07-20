@@ -29,7 +29,7 @@ export async function findUserByUserId(id: string, provider: OAuthProvider) {
 }
 
 export async function findUserByEmail(email: string) {
-    return prisma.user.findUnique({
+    return prisma['user'].findUnique({
         where: {
             email: email
         }

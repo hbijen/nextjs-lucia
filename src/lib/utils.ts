@@ -17,3 +17,4 @@ export function validEmail(email: string): boolean {
 }
 
 
+export const APP_DATE_FORMAT = process.env.APP_DATE_FORMAT || 'yyyy-MM-dd HH:mm'

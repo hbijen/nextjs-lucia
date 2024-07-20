@@ -9,26 +9,19 @@ const inter = Inter({
   variable: "--font-sans"
 });
 
-export const metadata: Metadata = {
-  title: "  ",
-  description: "demo App",
-};
-
 export default function LoginLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={cn(
+      <div className={cn(
           "min-h-screen bg-background font-sans antialiased",
           inter.variable
         )}>
           <div className="w-full h-screen flex items-center justify-center px-4">
             {children}
           </div>
-        </body>
-    </html>
+      </div>
   );
 }

@@ -1,5 +1,6 @@
 import { lucia, validateRequest } from "@/lib/auth";
 import { cookies } from "next/headers";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function Home() {
@@ -11,6 +12,7 @@ export default async function Home() {
 		<>
 			<h1>Hi, {user.email}!</h1>
 			<p>Your user ID is {user.id}.</p>
+			<Link href="/user">Manage Users</Link>
 			<form action={logout}>
 				<button>Sign out</button>
 			</form>

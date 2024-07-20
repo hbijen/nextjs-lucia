@@ -11,7 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { ActionResult, SimpleForm } from "@/components/simple-form"
+import { ActionResult, SimpleForm } from "@/components/basic/simple-form"
 import { Button } from "@/components/ui/button"
 import { REGEXP_ONLY_DIGITS } from "input-otp"
 import { lucia, validateRequest } from "@/lib/auth"

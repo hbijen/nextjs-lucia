@@ -6,6 +6,13 @@ const logger = winston.createLogger({
     transports: [new winston.transports.Console()]
 });
 
+const clientLogger = winston.createLogger({
+    level: process.env.LOG_LEVEL ?? "info",
+    format: winston.format.simple(),
+    transports: [new winston.transports.Console()]
+});
+
 export {
-    logger
+    logger,
+    clientLogger
 }

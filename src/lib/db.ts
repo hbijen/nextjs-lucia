@@ -1,6 +1,4 @@
 import { PrismaClient } from '@prisma/client'
-import { logger } from './logger';
-
 const prismaClientSingleton = (): PrismaClient => {
 
     if (process.env.NODE_ENV === "development") {
@@ -13,9 +11,8 @@ const prismaClientSingleton = (): PrismaClient => {
             ]
         })
         client.$on('query', async (e) => {
-            logger.debug('Query: ' + e.query)
-            logger.debug('Params: ' + e.params)
-            logger.debug('Duration: ' + e.duration + 'ms')
+            console.log('query: ', e.query)
+            console.log('params: ', e.params)
         });
         return client
     } else {

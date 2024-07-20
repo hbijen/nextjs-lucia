@@ -36,7 +36,7 @@ export async function changePassword(_: any, formData: FormData): Promise<Action
             token_hash: tokenHash
         }
     })
-    logger.info("change password userid: ", token?.userId)
+    logger.info("change-password", token?.userId)
 
     if (token) {
         await prisma.password_reset_token.deleteMany({
