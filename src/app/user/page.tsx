@@ -1,10 +1,10 @@
 import Image from "next/image"
 import Link from "next/link"
 import {
-  File,
+  Edit,
   ListFilter,
-  MoreHorizontal,
   PlusCircle,
+  UserPen,
 } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
@@ -131,22 +131,16 @@ export default async function ManageUsers() {
                       {format(user.created_at, APP_DATE_FORMAT)}
                     </TableCell>
                     <TableCell>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button
-                            aria-haspopup="true"
-                            size="icon"
-                            variant="ghost"
-                          >
-                            <MoreHorizontal className="h-4 w-4" />
-                            <span className="sr-only">Toggle menu</span>
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                          <DropdownMenuItem>Edit</DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
+
+                      <Link href={`./user/${user.id}`}>
+                        <Button size="sm" className="h-8 gap-1" variant={"ghost"}>
+                          <UserPen className="h-3.5 w-3.5" />
+                          <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                            Edit
+                          </span>
+                        </Button>
+                      </Link>
+
                     </TableCell>
                   </TableRow>)
 

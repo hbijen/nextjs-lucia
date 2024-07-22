@@ -11,11 +11,7 @@ export async function GET(request: Request): Promise<Response> {
 	const storedState = cookies().get("oauth_state")?.value ?? null;
     const storedCodeVerifier = cookies().get("code_verifier")?.value ?? null;
 
-    logger.debug("url", url)
-    logger.debug("code", code)
-    logger.debug("state", state)
-    logger.debug("storedState", storedState)
-    logger.debug("storedCodeVerifier", storedCodeVerifier)
+    logger.info("google-callback", {code,state,storedState,storedCodeVerifier})
 
 	if (!code || !state || !storedState || state !== storedState) {
 		return new Response(null, {
@@ -31,7 +27,7 @@ export async function GET(request: Request): Promise<Response> {
 			}
 		});
 		const googleUser: GoogleUser = await googleUserResponse.json();
-        logger.debug('googleUser: ', googleUser)
+        logger.debug('google-user', googleUser)
 
         let appUser = await findUserByUserId(`${googleUser.sub}`, "google")
 		if (!appUser) {
@@ -41,8 +37,8 @@ export async function GET(request: Request): Promise<Response> {
                 user_id: googleUser.sub,
                 provider: "google",
 				password: null,
-				firstname: null,
-				lastname: null,
+				firstname: googleUser.family_name,
+				lastname: googleUser.given_name,
 				emailVerified: true
             })
 		}
