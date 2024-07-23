@@ -1,6 +1,6 @@
 "use server"
 
-import { ActionResult } from "@/components/simple-form";
+import { ActionResult } from "@/components/basic/simple-form";
 import { lucia } from "@/lib/auth";
 import prisma from "@/lib/db";
 import { logger } from "@/lib/logger";
@@ -11,11 +11,11 @@ import { isWithinExpirationDate } from "oslo";
 import { sha256 } from "oslo/crypto";
 import { encodeHex } from "oslo/encoding";
 
-export async function changePassword(_: any, formData: FormData): Promise<ActionResult> {
+export async function changePassword(verifytoken: string, _:any, formData: FormData): Promise<ActionResult> {
     "use server";
+    
     const password1 = formData.get("password1");
     const password2 = formData.get("password2");
-    const verifytoken = formData.get("token");
 
     if (typeof password1 !== "string" || password1.length < 6) {
         return {

@@ -14,10 +14,12 @@ import {
     CardTitle,
   } from "@/components/ui/card"
 import { useParams } from "next/navigation"
-import { changePassword } from "./change-password"
+import { changePassword } from "./actions"
   
 export default function ResetPassword() {
     let { token } = useParams();
+    //instead of a hidden field, we can bind the token directly to the server side action
+    const changePasswordWithToken = changePassword.bind(null, token as string)
 
     return (
         <Card className="mx-auto max-w-md">
@@ -28,7 +30,7 @@ export default function ResetPassword() {
           </CardDescription>
         </CardHeader>
         <CardContent>        
-        <SimpleForm action={changePassword}>
+        <SimpleForm action={changePasswordWithToken}>
             <div className="grid gap-4">
                 <div className="grid gap-2">
                     <Label htmlFor="email">Enter Password</Label>
@@ -48,13 +50,6 @@ export default function ResetPassword() {
                         required
                     />
                 </div>
-                <Input
-                    id="token"
-                    type="hidden"
-                    name="token"
-                    value={token}
-                    required
-                />
                 <Button type="submit" className="w-full">
                     Submit
                 </Button>

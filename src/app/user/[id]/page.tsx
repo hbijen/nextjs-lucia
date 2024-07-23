@@ -1,3 +1,5 @@
+"use client"
+import { useParams } from "next/navigation";
 import Image from "next/image"
 import Link from "next/link"
 import {
@@ -58,14 +60,15 @@ import {
   ToggleGroupItem,
 } from "@/components/ui/toggle-group"
 
-export default function Dashboard() {
+export default function EditUserPage() {
+  
+  const { id } = useParams()
 
-    
-
+  
+  
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
-
-        <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
               <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
                 <Card>
                   <CardHeader>
@@ -82,6 +85,7 @@ export default function Dashboard() {
                           type="text"
                           className="w-full"
                           placeholder="Enter firstname"
+                          value={user?.firstname ?? ''}
                         />
                       </div>
                       <div className="grid gap-3">
@@ -92,6 +96,7 @@ export default function Dashboard() {
                           type="text"
                           className="w-full"
                           placeholder="Enter lastname"
+                          value={user?.firstname ?? ''}
                         />
                       </div>
 
@@ -303,6 +308,7 @@ export default function Dashboard() {
                 </Card>
           </div>
         </main>
+       
     </div>
   )
 }
