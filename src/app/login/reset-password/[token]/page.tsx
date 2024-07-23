@@ -5,7 +5,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { SimpleForm } from "@/components/basic/simple-form"
+import { SimpleForm } from "@/components/forms/simple-form"
 import {
     Card,
     CardContent,
@@ -15,9 +15,11 @@ import {
   } from "@/components/ui/card"
 import { useParams } from "next/navigation"
 import { changePassword } from "./actions"
+import { useFormStatus } from "react-dom"
   
 export default function ResetPassword() {
     let { token } = useParams();
+    const { pending } = useFormStatus()
     //instead of a hidden field, we can bind the token directly to the server side action
     const changePasswordWithToken = changePassword.bind(null, token as string)
 
@@ -50,7 +52,7 @@ export default function ResetPassword() {
                         required
                     />
                 </div>
-                <Button type="submit" className="w-full">
+                <Button type="submit" className="w-full" disabled={pending}>
                     Submit
                 </Button>
             </div>

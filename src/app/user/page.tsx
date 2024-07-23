@@ -35,7 +35,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import Search from "@/components/basic/search"
+import Search from "@/components/forms/search"
 import { findUsers, inactivate } from "@/lib/service/user-service"
 import Pagination01 from "@/components/pagination/pagination01"
 import { format } from "date-fns";

@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { ActionResult, SimpleForm } from "../basic/simple-form"
+import { ActionResult, SimpleForm } from "../forms/simple-form"
 import { hash } from "@node-rs/argon2"
 import { createAppUser, findUserByEmail, generateEmailVerificationCode, passwordHashOptions } from "@/lib/service/auth-service"
 import { validEmail } from "@/lib/utils"

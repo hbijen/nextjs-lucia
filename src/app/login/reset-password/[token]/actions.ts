@@ -1,6 +1,6 @@
 "use server"
 
-import { ActionResult } from "@/components/basic/simple-form";
+import { ActionResult } from "@/components/forms/simple-form";
 import { lucia } from "@/lib/auth";
 import prisma from "@/lib/db";
 import { logger } from "@/lib/logger";

@@ -4,7 +4,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { ActionResult, SimpleForm } from "../basic/simple-form";
+import { ActionResult, SimpleForm } from "../forms/simple-form";
 import { verify } from "@node-rs/argon2";
 import { findUserByEmail, passwordHashOptions } from "@/lib/service/auth-service";
 import { lucia } from "@/lib/auth";

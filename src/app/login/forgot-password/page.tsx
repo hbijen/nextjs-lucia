@@ -1,14 +1,8 @@
-import Image from "next/image"
+"use client"
 import Link from "next/link"
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { createPasswordResetToken, findUserByEmail } from "@/lib/service/auth-service";
-import { logger } from "@/lib/logger"
-import { ActionResult, SimpleForm } from "@/components/basic/simple-form"
-import { sendMail } from "@/lib/service/mail-service"
-import { renderAsync } from "@react-email/components"
+import { SubmitButton } from "@/components/forms/app-button"
+import { SimpleForm } from "@/components/forms/simple-form"
 import {
     Card,
     CardContent,
@@ -16,11 +10,11 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-import EmailResetPassword from "../../../../emails/reset-password/reset-password"
-import { redirect } from "next/navigation"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { resetPassword } from "./actions"
 
 export default function Login() {
-
     return (
         <Card className="mx-auto max-w-md">
             <CardHeader>
@@ -43,9 +37,7 @@ export default function Login() {
                                 required
                             />
                         </div>
-                        <Button type="submit" className="w-full">
-                            Submit
-                        </Button>
+                        <SubmitButton></SubmitButton>
                     </div>
                 </SimpleForm>
                 <div className="mt-4 text-right text-sm">
@@ -56,40 +48,4 @@ export default function Login() {
             </CardContent>
         </Card>
     )
-}
-
-async function resetPassword(_: any, formData: FormData): Promise<ActionResult> {
-    "use server";
-    const email = formData.get("email");
-    logger.info('reset-password', email)
-    const emailRegex = /^\S+@\S+\.\S+$/;
-    if (
-        typeof email !== "string" ||
-        email.length < 3 ||
-        email.length > 31 ||
-        !emailRegex.test(email)
-    ) {
-        logger.debug('emailRegex', emailRegex.test(email as string))
-
-        return {
-            error: "Invalid email"
-        };
-    }
-    const appUser = await findUserByEmail(email)
-    logger.info("appUser.provider ", appUser?.provider)
-    if (appUser?.provider == 'email-password') {
-        const token = await createPasswordResetToken(appUser.id)
-        const resetLink = `${process.env.APP_URL}/login/reset-password/${token}`
-        const tmpl = <EmailResetPassword userFirstname={appUser.firstname ?? 'User'} resetPasswordLink={resetLink}></EmailResetPassword>
-        await sendMail(email, "Password Reset", await renderAsync(tmpl))
-            .catch(err => {
-                logger.error('sendmail', err)
-                return {
-                    error: `Failed. ${err.message}`
-                }
-            })
-    }
-    // confirmation is displayed even for oauth users, even though we do not send any reset token
-    // its security measure to avoid exposing unnecessary detail to user who may be trying out random email id
-    return redirect('./forgot-password/confirm')
 }
