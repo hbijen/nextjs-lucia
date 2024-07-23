@@ -36,7 +36,7 @@ export async function findUserByEmail(email: string) {
     })
 }
 
-export async function createAppUser(user: Omit<AppUser, 'id' | 'created_at' | 'updated_at' | 'inactive_at'>) {
+export async function createAppUser(user: AppUser   ) {
     return prisma.user.create({
         data: user
     })

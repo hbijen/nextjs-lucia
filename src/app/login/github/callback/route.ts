@@ -37,10 +37,10 @@ export async function GET(request: Request): Promise<Response> {
                 email: githubUser.login,
                 user_id: `${githubUser.id}`,
                 provider: "github",
-				password: null,
-				firstname: null,
-				lastname: null,
-				emailVerified: true
+				firstname: '',
+				lastname: '',
+				emailVerified: true,
+				inactive_at: null
             })            
 		}
 

@@ -36,10 +36,10 @@ export async function GET(request: Request): Promise<Response> {
                 email: googleUser.email,
                 user_id: googleUser.sub,
                 provider: "google",
-				password: null,
 				firstname: googleUser.family_name,
 				lastname: googleUser.given_name,
-				emailVerified: true
+				emailVerified: true,
+				inactive_at: null
             })
 		}
 

@@ -1,16 +1,10 @@
-import Image from "next/image"
-import Link from "next/link"
 import {
-  Edit,
-  ListFilter,
-  PlusCircle,
-  UserCheck,
-  UserPen,
-  UserX,
+  PlusCircle
 } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 
+import Pagination01 from "@/components/pagination/pagination01"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -21,15 +15,6 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import {
   Table,
   TableBody,
   TableCell,
@@ -37,49 +22,26 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import Search from "@/components/forms/search"
-import { findUsers } from "@/lib/service/user-service"
-import Pagination01 from "@/components/pagination/pagination01"
-import { format } from "date-fns";
+import { SearchParams, findUsers } from "@/lib/service/user-service"
 import { APP_DATE_FORMAT } from "@/lib/utils"
-import { useToast } from "@/components/ui/use-toast"
-import { logger } from "@/lib/logger"
+import { format } from "date-fns"
 import EnableDisableUser from "./enable-user"
+import SearchUser from "./search-user"
 
-export default async function ManageUsers() {
 
-  const users = await findUsers();
 
+export default async function ManageUsers({ searchParams }: {searchParams: SearchParams}) {
+  console.log('searchParams', searchParams)
+  const users = await findUsers(searchParams);
 
   return (
     <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0">
           <div className="flex items-center">
             <div className="flex gap-2">
-              <Search placeholder="Search users..." />
+              <SearchUser/>
             </div>
             <div className="ml-auto flex items-center gap-2">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" className="h-8 gap-1">
-                    <ListFilter className="h-3.5 w-3.5" />
-                    <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                      Filter
-                    </span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuLabel>Filter by</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuCheckboxItem checked>
-                    All
-                  </DropdownMenuCheckboxItem>
-                  <DropdownMenuCheckboxItem>Active</DropdownMenuCheckboxItem>
-                  <DropdownMenuCheckboxItem>
-                    Inactive
-                  </DropdownMenuCheckboxItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
               <Button size="sm" className="h-8 gap-1">
                 <PlusCircle className="h-3.5 w-3.5" />
                 <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">

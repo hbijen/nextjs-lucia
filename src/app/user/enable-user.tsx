@@ -1,4 +1,3 @@
-import { SimpleForm } from "@/components/forms/simple-form";
 import { Button } from "@/components/ui/button";
 import { AppUser } from "@/lib/model/user";
 import { UserCheck, UserX } from "lucide-react";

@@ -1,10 +1,34 @@
 "use server"
 
 import prisma from "../db"
-import { AppUser } from "../model/user"
+import { Prisma } from '@prisma/client';
 
-export async function findUsers() {
-    return prisma.user.findMany()
+export type SearchParams = {
+    name: string
+    filter: string
+ }
+ 
+
+export async function findUsers(params: SearchParams) {
+    const { name, filter } = params
+    
+    const whereParam: Prisma.userWhereInput = {
+    };
+    if (name) {
+        whereParam.OR = [
+            {firstname: {startsWith: name, mode: 'insensitive' } },
+            {lastname: {startsWith: name, mode: 'insensitive'} },
+        ]
+    }
+    if (filter == 'inactive') {
+        whereParam.inactive_at = {not: null}
+    } else if (filter == 'active') {
+        whereParam.inactive_at = null
+    }
+
+    return prisma.user.findMany({
+        where: whereParam
+    })
 }
 
 export async function disableUser(id: string, disable: boolean) {
@@ -35,7 +59,7 @@ export async function getUser(id: string) {
     })
 }
 
-export async function saveUser(id: string) {
+export async function saveUser  (id: string) {
     return prisma.user.update(
         {
             data: { inactive_at: new Date()},
