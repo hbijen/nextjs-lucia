@@ -15,11 +15,11 @@ import {
   } from "@/components/ui/card"
 import { useParams } from "next/navigation"
 import { changePassword } from "./actions"
-import { useFormStatus } from "react-dom"
+import { SubmitButton } from "@/components/forms/app-button"
   
 export default function ResetPassword() {
     let { token } = useParams();
-    const { pending } = useFormStatus()
+
     //instead of a hidden field, we can bind the token directly to the server side action
     const changePasswordWithToken = changePassword.bind(null, token as string)
 
@@ -52,9 +52,7 @@ export default function ResetPassword() {
                         required
                     />
                 </div>
-                <Button type="submit" className="w-full" disabled={pending}>
-                    Submit
-                </Button>
+                <SubmitButton></SubmitButton>
             </div>
         </SimpleForm>
         <div className="mt-4 text-right text-sm">

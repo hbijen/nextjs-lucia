@@ -12,7 +12,6 @@ import { sha256 } from "oslo/crypto";
 import { encodeHex } from "oslo/encoding";
 
 export async function changePassword(verifytoken: string, _:any, formData: FormData): Promise<ActionResult> {
-    "use server";
     
     const password1 = formData.get("password1");
     const password2 = formData.get("password2");
