@@ -1,0 +1,75 @@
+{
+  "type": "array",
+  "length": {
+    "type": "number",
+    "subtype": "u64",
+    "constant": 1
+  },
+  "content": {
+    "type": "object",
+    "email": {
+      "type": "string",
+      "faker": {
+        "generator": "safe_email"
+      }
+    },
+    "emailVerified": {
+      "type": "bool",
+      "frequency": 0.9
+    },
+    "firstname": {
+      "type": "string",
+      "faker": {
+        "generator": "first_name"
+      }
+    },
+    "lastname": {
+      "type": "string",
+      "faker": {
+        "generator": "last_name"
+      }
+    },
+    "id": {
+      "type": "string",
+      "uuid": {}
+    },
+    "inactive_at": {
+      "type": "one_of",
+      "variants": [
+        {
+          "weight": 1.0,
+          "type": "date_time",
+          "format": "%Y-%m-%dT%H:%M:%S",
+          "subtype": "naive_date_time"
+        },
+        {
+          "weight": 3.0,
+          "type": "null"
+        }
+      ]
+    },
+    "password": {
+      "type": "string",
+      "constant": "$argon2id$v=19$m=19456,t=2,p=1$ZN7QDyo6GpXQwyp2jceyqQ$U+5SxGfUyUy4VrFKquq+wPt5vosxbz1wCAmxFVxf8vA"
+    },
+    "provider": {
+      "type": "string",
+      "constant": "email-password"
+    },
+    "created_at": {
+      "weight": 1.0,
+      "type": "date_time",
+      "format": "%Y-%m-%dT%H:%M:%S",
+      "subtype": "naive_date_time"
+    },
+    "updated_at": {
+      "weight": 1.0,
+      "type": "date_time",
+      "format": "%Y-%m-%dT%H:%M:%S",
+      "subtype": "naive_date_time"
+    },
+    "user_id": {
+      "type": "null"
+    }
+  }
+}

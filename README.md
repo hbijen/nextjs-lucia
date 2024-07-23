@@ -35,3 +35,17 @@ npx prisma db push
 - react-email: Starts a local development server to preview the email templates before sending them out. nicely done
 - @react-email/components: to create email templates
 - nodemailer: sends email via smtp
+
+## Loading test data using synth
+
+install synth. 
+
+create synth schema from existing database schema
+```sh
+synth import --from postgres://test:test@localhost:5454/test --schema public data
+```
+
+load generated data into the db
+```sh
+synth generate --scenario users-only --size 54 --to postgres://test:test@localhost:5454/test --schema public data
+```
