@@ -27,12 +27,15 @@ import { APP_DATE_FORMAT } from "@/lib/utils"
 import { format } from "date-fns"
 import EnableDisableUser from "./enable-user"
 import SearchUser from "./search-user"
+import { getPaginationUrl } from "@/lib/service/pagination-service"
 
 
 
 export default async function ManageUsers({ searchParams }: {searchParams: UserSearchParams}) {
   console.log('searchParams', searchParams)
-  const users = await findUsers(searchParams);
+  const {data, ...page} = await findUsers(searchParams);
+ 
+  const [prevPage, nextPage] = getPaginationUrl(searchParams, page)
 
   return (
     <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
@@ -79,24 +82,24 @@ export default async function ManageUsers({ searchParams }: {searchParams: UserS
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {users.map(user => {
+                  {data?.map(user => {
                     return (<TableRow key={user.id}>
-                      <TableCell className="font-medium">
+                      <TableCell className="font-medium p-2">
                         {user.firstname} {user.lastname}
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="p-2">
                         <Badge variant="outline">{user.inactive_at ? 'Inactive' : 'Active'}</Badge>
                       </TableCell>
-                      <TableCell className="hidden md:table-cell">
+                      <TableCell className="p-2 hidden md:table-cell">
                         {user.email}
                       </TableCell>
-                      <TableCell className="hidden lg:table-cell">
+                      <TableCell className="p-2 hidden lg:table-cell">
                         {user.provider}
                       </TableCell>
-                      <TableCell className="hidden xl:table-cell">
-                        {format(user.created_at, APP_DATE_FORMAT)}
+                      <TableCell className="p-2 hidden xl:table-cell">
+                        {format(user.created_at!, APP_DATE_FORMAT)}
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="p-2">
                         <EnableDisableUser id={user.id} inactive_at={user.inactive_at}></EnableDisableUser>
                       </TableCell>
                     </TableRow>)
@@ -106,7 +109,7 @@ export default async function ManageUsers({ searchParams }: {searchParams: UserS
               </Table>
             </CardContent>
             <CardFooter>
-              <Pagination01></Pagination01>
+              <Pagination01 page={page} prevPage={prevPage} nextPage={nextPage}></Pagination01>
             </CardFooter>
           </Card>
         </main>

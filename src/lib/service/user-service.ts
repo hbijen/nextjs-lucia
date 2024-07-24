@@ -3,18 +3,21 @@
 import prisma from "../db"
 import { Prisma } from '@prisma/client';
 import { z } from "zod";
+import { AppUser } from "../model/user";
+import { Paginated, PaginationParams } from "./pagination-service";
 
 const SearchParams = z.object({
     name: z.string().optional(),
     filter: z.string().optional(),
-    offset: z.number().optional(),
-    size: z.number().optional()
-})
+}).merge(PaginationParams)
+
 export type UserSearchParams = z.infer<typeof SearchParams>
 
+export async function findUsers(params: UserSearchParams): Promise<Paginated<AppUser>> {
 
-export async function findUsers(params: UserSearchParams) {
-    const { name, filter, offset, size } = params
+    console.log("SearchParams.parse(params) ", SearchParams.parse(params))
+
+    const { name, filter, offset, size } = SearchParams.parse(params)
 
     const whereParam: Prisma.userWhereInput = {
     };
@@ -30,13 +33,28 @@ export async function findUsers(params: UserSearchParams) {
         whereParam.inactive_at = null
     }
 
-    const skip = offset ?? 0
-    const take = size ?? 10
+    const skip = offset || 0
+    const take = size || 10
 
-    return prisma.user.findMany({
+    const a = prisma.user.count({where: whereParam})
+
+    const b = prisma.user.findMany({
         where: whereParam,
         skip: skip,
-        take: 10
+        take: take,
+        orderBy: [
+            { firstname: {sort: "asc"} },
+            { lastname: {sort: "asc"} }
+        ]
+    })
+
+    return Promise.all([a,b]).then(r => {
+        return {
+            offset: skip,
+            size: take,
+            total: r[0],
+            data: r[1] as AppUser[]
+        }
     })
 }
 

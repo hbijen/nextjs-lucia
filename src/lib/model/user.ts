@@ -19,6 +19,8 @@ export const UserSchema = z.object(
         provider: AUTH_PROVIDERS,
         emailVerified: z.boolean().default(false),
         inactive_at: z.date().nullable().default(null),
+        created_at: z.date().optional(),
+        update_at: z.date().optional(),
     }
 );
   

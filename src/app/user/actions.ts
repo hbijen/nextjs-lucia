@@ -27,7 +27,8 @@ export async function userDisable(formData: FormData): Promise<ActionResult> {
 
 export async function searchUsers(formData: FormData) {
     const text = formData.get("search")
-    return redirect(`/user?name=${text}`)
+    return text ? redirect(`/user?name=${text}`)
+                : redirect(`/user`)
 }
 
 export async function filterUsers(formData: FormData) {
