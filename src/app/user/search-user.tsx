@@ -3,7 +3,7 @@ import { SearchIcon } from "lucide-react";
 import { searchUsers } from "./actions";
 import { Button } from "@/components/ui/button";
 
-export default async function SearchUser() {
+export default async function SearchUser(props: {name?: string}) {
 
     return (
         <form action={searchUsers}>
@@ -17,6 +17,7 @@ export default async function SearchUser() {
                         name="search"
                         className="pl-10"
                         placeholder="Search users..."
+                        defaultValue={props.name}
                     />
                     <SearchIcon className="absolute h-[18px] w-[18px] left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                 </div>

@@ -19,12 +19,14 @@ type PaginationProps = {
 
 export default async function Pagination01(props: PaginationProps) {
     return (
-        <div className="flex-1">
-            <div className="text-xs text-muted-foreground">
-                Showing <strong>{1}-10</strong> of <strong>32</strong>
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 items-center w-full">
+            <div className="flex-1 text-xs text-muted-foreground">
+                <div className="w-full">
+                    Showing <strong>{1}-10</strong> of <strong>32</strong>
+                </div>
             </div>
 
-            <div>
+            <div className="flex-1 justify-center">
                 <Pagination>
                     <PaginationContent>
                         <PaginationItem>

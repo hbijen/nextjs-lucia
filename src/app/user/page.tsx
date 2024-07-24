@@ -22,7 +22,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { SearchParams, findUsers } from "@/lib/service/user-service"
+import { UserSearchParams, findUsers } from "@/lib/service/user-service"
 import { APP_DATE_FORMAT } from "@/lib/utils"
 import { format } from "date-fns"
 import EnableDisableUser from "./enable-user"
@@ -30,7 +30,7 @@ import SearchUser from "./search-user"
 
 
 
-export default async function ManageUsers({ searchParams }: {searchParams: SearchParams}) {
+export default async function ManageUsers({ searchParams }: {searchParams: UserSearchParams}) {
   console.log('searchParams', searchParams)
   const users = await findUsers(searchParams);
 
@@ -39,7 +39,7 @@ export default async function ManageUsers({ searchParams }: {searchParams: Searc
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0">
           <div className="flex items-center">
             <div className="flex gap-2">
-              <SearchUser/>
+              <SearchUser name={searchParams.name ?? ''}/>
             </div>
             <div className="ml-auto flex items-center gap-2">
               <Button size="sm" className="h-8 gap-1">
