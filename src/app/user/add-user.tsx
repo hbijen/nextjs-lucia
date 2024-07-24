@@ -16,7 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { addUser } from "./actions"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 type AddEditUserProps = {
     children: React.ReactNode,
@@ -33,6 +33,9 @@ export function AddEditUser({ id, children }: AddEditUserProps) {
     const userForm = useForm<z.infer<typeof AppUser>>({
         resolver: zodResolver(AppUser),
         defaultValues: {
+            firstname: "",
+            lastname: "",
+            email: "",
             provider: 'email-password',
             emailVerified: false,
             inactive_at: new Date()
@@ -45,13 +48,8 @@ export function AddEditUser({ id, children }: AddEditUserProps) {
         console.log(values)
         addUser(values)
         .then(r=> {
-            console.log('r ', r)
             if (r.ok) {
-                userForm.reset({
-                    provider: 'email-password',
-                    emailVerified: false,
-                    inactive_at: new Date()                    
-                })
+                userForm.reset()
                 setInfo({error: '', success: `Created user with id = ${r.data?.id} `})
             } else {
                 setInfo({error: r.error ?? '', success: ''})
@@ -74,10 +72,8 @@ export function AddEditUser({ id, children }: AddEditUserProps) {
                         {id ? 'Only users created via email verfication can be edited'
                             : 'Create a new user. A verification email will be sent to the entered email.'}
                     </DialogDescription>
-                    <DialogDescription>
-                        { info.error && <div className="text-red-600">{info.error}</div> }
-                        { info.success && <div className="text-blue-600">{info.success}</div> }
-                    </DialogDescription>
+                    { info.error && <div className="text-red-600">{info.error}</div> }
+                    { info.success && <div className="text-blue-600">{info.success}</div> }
                 </DialogHeader>
                 <Form {...userForm}>
                     <form onSubmit={userForm.handleSubmit(save)} className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -125,8 +121,6 @@ export function AddEditUser({ id, children }: AddEditUserProps) {
                         />
                         <div className="text-center p-4 col-span-2">
                             <Button type="submit" className="w-48">Save</Button>
-
-                            <Button className="w-48" onClick={() => userForm.reset({})}>Clear</Button>
                         </div>
                     </form>
                 </Form>
@@ -134,8 +128,6 @@ export function AddEditUser({ id, children }: AddEditUserProps) {
                 <DialogFooter>
                 </DialogFooter>
             </DialogContent>
-
-
         </Dialog>
     )
 }
