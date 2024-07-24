@@ -34,7 +34,7 @@ export default async function Pagination01(props: PaginationProps) {
                 <Pagination>
                     <PaginationContent>
                         <PaginationItem>
-                            <Button variant={props.prevPage ? "outline" : "ghost"} className="w-full" disabled={props.prevPage == ''} asChild>
+                            <Button variant={props.prevPage ? "outline" : "ghost"} className="w-full focus-visible:ring-0" disabled={props.prevPage == ''} asChild>
                                 <Link href={props.prevPage} className={props.prevPage ? "" : "text-muted-foreground pointer-events-none opacity-50"}>
                                     <ChevronLeft className="h-4 w-4"></ChevronLeft>
                                     <span className="sr-only sm:not-sr-only">Previous</span>
@@ -45,7 +45,7 @@ export default async function Pagination01(props: PaginationProps) {
                             <PaginationEllipsis />
                         </PaginationItem>
                         <PaginationItem>
-                            <Button variant={props.nextPage ? "outline" : "ghost"} className="w-full" disabled={props.nextPage == ''} asChild>
+                            <Button variant={props.nextPage ? "outline" : "ghost"} className="w-full focus-visible:ring-0" disabled={props.nextPage == ''} asChild>
                                 <Link href={props.nextPage} className={props.nextPage ? "" : "text-muted-foreground pointer-events-none opacity-50"}>
                                     <span className="sr-only sm:not-sr-only">Next</span><ChevronRight className="h-4 w-4"></ChevronRight>
                                 </Link>

@@ -1,4 +1,5 @@
 import {
+  Edit,
   PlusCircle
 } from "lucide-react"
 
@@ -29,13 +30,13 @@ import EnableDisableUser from "./enable-user"
 import SearchUser from "./search-user"
 import { getPaginationUrl } from "@/lib/service/pagination-service"
 import { AddEditUser } from "./add-user"
+import Link from "next/link"
 
 
 
 export default async function ManageUsers({ searchParams }: { searchParams: UserSearchParams }) {
   console.log('searchParams', searchParams)
   const { data, ...page } = await findUsers(searchParams);
-
   const [prevPage, nextPage] = getPaginationUrl(searchParams, page)
 
   return (
@@ -88,7 +89,16 @@ export default async function ManageUsers({ searchParams }: { searchParams: User
                 {data?.map(user => {
                   return (<TableRow key={user.id}>
                     <TableCell className="font-medium p-2">
-                      {user.firstname} {user.lastname}
+
+                      <Button size="sm" className="h-8 gap-1 focus-visible:ring-0" variant="link" asChild>
+                        <Link href={`./user/${user.id}`}>
+                          <Edit className="h-4 w-4" />
+                          <span className="sm:whitespace-nowrap">
+                            {user.firstname} {user.lastname}
+                          </span>
+                        </Link>
+                      </Button>
+
                     </TableCell>
                     <TableCell className="p-2">
                       <Badge variant="outline">{user.inactive_at ? 'Inactive' : 'Active'}</Badge>
@@ -102,7 +112,7 @@ export default async function ManageUsers({ searchParams }: { searchParams: User
                     <TableCell className="p-2 hidden xl:table-cell">
                       {format(user.created_at!, APP_DATE_FORMAT)}
                     </TableCell>
-                    <TableCell className="p-2">
+                    <TableCell className="flex p-2 gap-2 w-20 sm:w-44 xl:w-36">
                       <EnableDisableUser id={user.id} inactive_at={user.inactive_at}></EnableDisableUser>
                     </TableCell>
                   </TableRow>)

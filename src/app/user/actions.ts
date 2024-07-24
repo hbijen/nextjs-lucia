@@ -3,32 +3,33 @@
 import { ActionResult } from "@/components/forms/simple-form";
 import { logger } from "@/lib/logger";
 import { AppResponse } from "@/lib/model/app-response";
-import { AppUser } from "@/lib/model/user";
+import { AppUser, AuthProviders, toAppUser } from "@/lib/model/user";
 import { createAppUser, createPasswordResetToken, findUserByEmail } from "@/lib/service/auth-service";
-import { disableUser } from "@/lib/service/user-service";
+import { disableUser, saveUser } from "@/lib/service/user-service";
 import { redirect } from "next/navigation";
 import EmailAccountCreation from "../../../emails/account-creation/account-creation";
 import { renderAsync } from "@react-email/components";
 import { sendMail } from "@/lib/service/mail-service";
+import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 
-export async function userEnable(formData: FormData): Promise<ActionResult> {
-
+export async function userEnable(formData: FormData) {
     const id = formData.get('user_id') as string
     logger.info("enable-disable-user", { id })
 
-    disableUser(id, false)
+    await disableUser(id, false)
 
-    return {}
+    revalidatePath('/user')
 }
 
-export async function userDisable(formData: FormData): Promise<ActionResult> {
+export async function userDisable(formData: FormData) {
 
     const id = formData.get('user_id') as string
     logger.info("enable-disable-user", { id })
 
-    disableUser(id, true)
+    await disableUser(id, true)
 
-    return {}
+    revalidatePath('/user')
 }
 
 export async function searchUsers(formData: FormData) {
@@ -61,9 +62,9 @@ export async function addUser(aUser: AppUser): Promise<AppResponse<AppUser>> {
     }
 
     return {
-            ok: true,
-            data: user as AppUser
-        }
+        ok: true,
+        data: user as AppUser
+    }
 }
 
 
@@ -81,4 +82,16 @@ export async function sendAccountCreationLink(id: string, name: string, email: s
                 error: `Failed. ${err.message}`
             }
         })
+}
+
+
+export async function updateUser(id: string, aUser: AppUser): Promise<AppResponse<AppUser | null>> {
+    logger.debug('adduser', aUser)
+    const validateUser = AppUser.parse(aUser)
+
+    const user = await saveUser(id, validateUser)
+    return {
+        ok: true,
+        data: toAppUser(user)
+    }
 }

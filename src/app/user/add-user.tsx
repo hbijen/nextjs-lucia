@@ -9,21 +9,20 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { AppUser } from "@/lib/model/user"
-import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useState } from "react"
+import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { addUser } from "./actions"
-import { useEffect, useState } from "react"
 
 type AddEditUserProps = {
-    children: React.ReactNode,
-    id?: string | undefined
+    children?: React.ReactNode | undefined,
 }
 
-export function AddEditUser({ id, children }: AddEditUserProps) {
+export function AddEditUser({ children }: AddEditUserProps) {
 
     const [info, setInfo] = useState({
         error: "",
@@ -59,18 +58,21 @@ export function AddEditUser({ id, children }: AddEditUserProps) {
         })
     }
 
+    function onOpenChange() {
+        setInfo({error: '', success: ''})
+    }
+
     return (
-        <Dialog>
+        <Dialog onOpenChange={onOpenChange}>
             <DialogTrigger asChild>
                 {children}
             </DialogTrigger>
 
             <DialogContent className="sm md:max-w-[728px]">
                 <DialogHeader>
-                    <DialogTitle>{id ? 'Edit User' : 'Add User'}</DialogTitle>
+                    <DialogTitle>Add User</DialogTitle>
                     <DialogDescription>
-                        {id ? 'Only users created via email verfication can be edited'
-                            : 'Create a new user. A verification email will be sent to the entered email.'}
+                        Create a new user. A verification email will be sent to the entered email.
                     </DialogDescription>
                     { info.error && <div className="text-red-600">{info.error}</div> }
                     { info.success && <div className="text-blue-600">{info.success}</div> }

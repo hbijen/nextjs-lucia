@@ -21,8 +21,8 @@ model user {
   lastname  String?
   password  String?
   user_id String?
-  provider String?
-  emailVerified Boolean? @default(false)
+  provider String
+  emailVerified Boolean @default(false)
   session session[]
   password_reset_token password_reset_token[]
   verification_code verification_code[]

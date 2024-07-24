@@ -3,7 +3,7 @@
 import prisma from "../db"
 import { Prisma } from '@prisma/client';
 import { z } from "zod";
-import { AppUser } from "../model/user";
+import { AppUser, toAppUser } from "../model/user";
 import { Paginated, PaginationParams } from "./pagination-service";
 import { createPasswordResetToken } from "./auth-service";
 
@@ -66,7 +66,7 @@ export async function disableUser(id: string, disable: boolean) {
     )
 }
 
-export async function getUser(id: string) {
+export async function getUser(id: string): Promise<AppUser | null> {
     return prisma.user.findUnique({
         select: {
             id: true,
@@ -77,18 +77,20 @@ export async function getUser(id: string) {
             user_id: true,
             emailVerified: true,
             created_at: true,
-            updated_at: true
+            updated_at: true,
+            inactive_at: true
         },
         where: {
             id: id
         }
-    })
+    }).then(r => r ? toAppUser(r) : null)
 }
 
-export async function saveUser(id: string) {
+export async function saveUser(id:string, user: AppUser) {
+    const {firstname, lastname} = user
     return prisma.user.update(
         {
-            data: { inactive_at: new Date() },
+            data: { firstname, lastname },
             where: { id: id }
         }
     )

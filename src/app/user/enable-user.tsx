@@ -9,7 +9,7 @@ export default async function EnableDisableUser(props: Pick<AppUser, 'id' | 'ina
         <form>
             <input name="user_id" type="hidden" defaultValue={props.id}></input>
             {!props.inactive_at &&
-                <Button size="sm" className="h-8 gap-1" variant={"destructive"} type="submit" formAction={userDisable}>
+                <Button size="sm" className="h-8 gap-1" variant="destructive" type="submit" formAction={userDisable}>
                     <UserX className="h-4 w-4" />
                     <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                         Disable
@@ -17,7 +17,7 @@ export default async function EnableDisableUser(props: Pick<AppUser, 'id' | 'ina
                 </Button>
             }
             {props.inactive_at &&
-                <Button size="sm" className="h-8 gap-1" variant={"default"} type="submit" formAction={userEnable}>
+                <Button size="sm" className="h-8 gap-1" variant="secondary" type="submit" formAction={userEnable}>
                     <UserCheck className="h-4 w-4" />
                     <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                         Enable
@@ -27,4 +27,3 @@ export default async function EnableDisableUser(props: Pick<AppUser, 'id' | 'ina
         </form>
     )
 }
-

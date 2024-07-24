@@ -5,8 +5,8 @@ import { user, session } from "@prisma/client";
 
 export type AppSession = session  
 
-export const AUTH_PROVIDERS = z.enum(["google","github","email-password"])
-type AuthProviders = z.infer<typeof AUTH_PROVIDERS>
+export const AuthProviders = z.enum(["google","github","email-password"])
+type AuthProviders = z.infer<typeof AuthProviders>
 
 export const AppUser = z.object(
     {
@@ -16,11 +16,11 @@ export const AppUser = z.object(
         lastname: z.string(),
         password: z.string().min(6).optional(),
         user_id: z.string().optional(),
-        provider: AUTH_PROVIDERS,
+        provider: AuthProviders,
         emailVerified: z.boolean().default(false),
         inactive_at: z.date().nullable().default(null),
         created_at: z.date().optional(),
-        update_at: z.date().optional(),
+        updated_at: z.date().optional(),
     }
 );
   
@@ -28,6 +28,14 @@ export const AppUser = z.object(
 //   export const AppUser = z.optional(UserSchema)
 export type AppUser = z.infer<typeof AppUser>
 
-//   export const UserUpdate = UserSchema.omit({ id: true, created_at: true, updated_at: true })
-
-  
+export const toAppUser = (usr: Omit<user, 'password'>): AppUser | null => {
+  const {id, email, inactive_at, created_at, updated_at} = usr
+  return {
+    id, email, inactive_at, created_at, updated_at,
+    firstname: usr.firstname ?? "",
+    lastname: usr.lastname ?? "",
+    user_id: usr.user_id ?? "",
+    emailVerified: usr.emailVerified ?? false,
+    provider: AuthProviders.parse(usr.provider)
+  }
+}
