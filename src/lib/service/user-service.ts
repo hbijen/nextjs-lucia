@@ -5,6 +5,7 @@ import { Prisma } from '@prisma/client';
 import { z } from "zod";
 import { AppUser } from "../model/user";
 import { Paginated, PaginationParams } from "./pagination-service";
+import { createPasswordResetToken } from "./auth-service";
 
 const SearchParams = z.object({
     name: z.string().optional(),
@@ -14,8 +15,6 @@ const SearchParams = z.object({
 export type UserSearchParams = z.infer<typeof SearchParams>
 
 export async function findUsers(params: UserSearchParams): Promise<Paginated<AppUser>> {
-
-    console.log("SearchParams.parse(params) ", SearchParams.parse(params))
 
     const { name, filter, offset, size } = SearchParams.parse(params)
 

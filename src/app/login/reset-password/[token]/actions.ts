@@ -62,7 +62,8 @@ export async function changePassword(verifytoken: string, _:any, formData: FormD
         await prisma.user.update({
             data: {
                 password: passwordHash,
-                emailVerified: true
+                emailVerified: true,
+                inactive_at: null
             },
             where: {
                 id: token.userId

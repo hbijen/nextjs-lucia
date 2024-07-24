@@ -108,12 +108,12 @@ async function signup(_: any, formData: FormData): Promise<ActionResult> {
     const passwordHash = await hash(password, passwordHashOptions);
     const newUser = await createAppUser({
         email: email,
-        user_id: null,
         provider: "email-password",
         password: passwordHash,
         firstname: firstname as string,
         lastname: lastname as string,
-        emailVerified: false
+        emailVerified: false,
+        inactive_at: new Date()
     }).catch(err => {
         logger.debug("create user error===============", err)
         logger.debug("create user error+++++++++++++", JSON.stringify(err))
