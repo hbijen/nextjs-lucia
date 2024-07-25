@@ -16,5 +16,7 @@ export function validEmail(email: string): boolean {
   return /^\S+@\S+\.\S+$/.test(email)
 }
 
-
 export const APP_DATE_FORMAT = process.env.APP_DATE_FORMAT || 'yyyy-MM-dd HH:mm'
+
+
+export const IS_DEV = process.env.NODE_ENV === "development"

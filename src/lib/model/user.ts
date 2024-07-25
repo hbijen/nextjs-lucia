@@ -11,12 +11,12 @@ type AuthProviders = z.infer<typeof AuthProviders>
 export const AppUser = z.object(
     {
         id: z.string().cuid().uuid().optional(),
-        email: z.string().email(),
-        firstname: z.string(),
-        lastname: z.string(),
+        email: z.string().email().optional(),
+        firstname: z.string().optional(),
+        lastname: z.string().optional(),
         password: z.string().min(6).optional(),
         user_id: z.string().optional(),
-        provider: AuthProviders,
+        provider: AuthProviders.optional(),
         emailVerified: z.boolean().default(false),
         inactive_at: z.date().nullable().default(null),
         created_at: z.date().optional(),

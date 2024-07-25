@@ -1,4 +1,7 @@
 "use client"
+import { DevFormError } from "@/components/forms/debug"
+import { GoBack } from "@/components/forms/go-back"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -6,20 +9,21 @@ import {
   CardHeader,
   CardTitle
 } from "@/components/ui/card"
-import { AppUser } from "@/lib/model/user"
-import { getUser } from "@/lib/service/user-service"
-import { useEffect, useState } from "react"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { AppUser } from "@/lib/model/user"
+import { getUser } from "@/lib/service/user-service"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { updateUser } from "../actions"
-import { Button } from "@/components/ui/button"
+import { useToast } from "@/components/ui/use-toast"
 
 export default function ManageUsers({ params }: { params: any }) {
   console.log('searchParams', params.id)
   const [user, setUser] = useState<AppUser | null>(null)
+  const { toast } = useToast()
 
   const userForm = useForm<z.infer<typeof AppUser>>({
     resolver: zodResolver(AppUser),
@@ -32,21 +36,35 @@ export default function ManageUsers({ params }: { params: any }) {
   useEffect(() => {
     getUser(params.id).then(r => {
       setUser(r)
-      userForm.reset({firstname: r?.firstname, lastname: r?.lastname})
+      userForm.reset({
+        firstname: r?.firstname,
+        lastname: r?.lastname
+      })
     })
   }, [params.id])
 
   function save(values: z.infer<typeof AppUser>) {
 
-    console.log("save", values)
     updateUser(user?.id!, values)
       .then(r => {
-        console.log(r)
         if (r.ok) {
+          toast({
+            title: "Successfully Saved.",
+            description: `User ${r.data?.firstname} ${r.data?.lastname} has been updated.`,
+          })
         } else {
+          toast({
+            variant: "destructive",
+            title: "Failed Saved.",
+            description: r.error,
+          })
         }
       }).catch(err => {
-        console.error('r ', err)
+        toast({
+          variant: "destructive",
+          title: "Failed Saved.",
+          description: err.toString(),
+        })
       })
   }
 
@@ -63,6 +81,7 @@ export default function ManageUsers({ params }: { params: any }) {
             <CardDescription>
               {user.firstname} {user.lastname} ( {user.email} )
             </CardDescription>
+            <DevFormError useForm={userForm} ></DevFormError>
           </CardHeader>
           <CardContent>
             <Form {...userForm}>
@@ -95,16 +114,17 @@ export default function ManageUsers({ params }: { params: any }) {
                     </FormItem>
                   )}
                 />
-                <div className="text-center p-4 col-span-2">
+                <div className="flex justify-center p-4 col-span-2 gap-4">
                   <Button type="submit" className="w-48">Save</Button>
+                  <GoBack label="Cancel"></GoBack>
                 </div>
               </form>
             </Form>
-
-
           </CardContent>
         </Card>
       </main>
+
     </div>
   )
 }
+
