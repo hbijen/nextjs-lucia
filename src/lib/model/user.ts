@@ -16,7 +16,7 @@ export const AppUser = z.object(
         lastname: z.string().optional(),
         password: z.string().min(6).optional(),
         user_id: z.string().optional(),
-        provider: AuthProviders.optional(),
+        provider: z.string().optional(),
         emailVerified: z.boolean().default(false),
         inactive_at: z.date().nullable().default(null),
         created_at: z.date().optional(),
@@ -39,3 +39,16 @@ export const toAppUser = (usr: Omit<user, 'password'>): AppUser | null => {
     provider: AuthProviders.parse(usr.provider)
   }
 }
+
+
+// export const fromAppUser = (appUser: AppUser): user => {
+//   const {id, email, inactive_at, firstname, lastname } = appUser
+//   const usr = {
+//     id, email, inactive_at,
+//     firstname,
+//     lastname,
+//     user_id: usr.user_id ?? "",
+//     emailVerified: usr.emailVerified ?? false,
+//     provider: appUser.provider
+//   }
+// }

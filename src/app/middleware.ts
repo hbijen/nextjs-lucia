@@ -5,7 +5,9 @@ import type { NextRequest } from 'next/server'
 // This function can be marked `async` if using `await` inside
 export default async function middleware(request: NextRequest) {
 
+    logger.debug('=======================================================================================================')
     logger.debug('middleware', {url: request.url, nextUrl: request.nextUrl})
+    logger.debug('=======================================================================================================')
 
     return NextResponse.next()
 }

@@ -1,17 +1,15 @@
 "use server";
 
-import { ActionResult } from "@/components/forms/simple-form";
 import { logger } from "@/lib/logger";
 import { AppResponse } from "@/lib/model/app-response";
-import { AppUser, AuthProviders, toAppUser } from "@/lib/model/user";
-import { createAppUser, createPasswordResetToken, findUserByEmail } from "@/lib/service/auth-service";
-import { disableUser, saveUser } from "@/lib/service/user-service";
-import { redirect } from "next/navigation";
-import EmailAccountCreation from "../../../emails/account-creation/account-creation";
-import { renderAsync } from "@react-email/components";
+import { AppUser, toAppUser } from "@/lib/model/user";
+import { createPasswordResetToken, findUserByEmail } from "@/lib/service/auth-service";
 import { sendMail } from "@/lib/service/mail-service";
+import { createAppUser, disableUser, saveUser } from "@/lib/service/user-service";
+import { renderAsync } from "@react-email/components";
 import { revalidatePath } from "next/cache";
-import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+import EmailAccountCreation from "../../../../emails/account-creation/account-creation";
 
 export async function userEnable(formData: FormData) {
     const id = formData.get('user_id') as string
@@ -47,7 +45,7 @@ export async function addUser(aUser: AppUser): Promise<AppResponse<AppUser>> {
     logger.debug('adduser', aUser)
     const validateUser = AppUser.parse(aUser)
 
-    const appUser = await findUserByEmail(validateUser.email)
+    const appUser = await findUserByEmail(validateUser.email!)
     if (appUser) {
         return {
             ok: false,
@@ -55,6 +53,8 @@ export async function addUser(aUser: AppUser): Promise<AppResponse<AppUser>> {
         }
     }
 
+    validateUser.emailVerified = false;
+    validateUser.inactive_at = new Date();
     const user = await createAppUser(validateUser)
 
     if (process.env.APP_EMAIL_ACCOUNT_CREATION == 'true') {

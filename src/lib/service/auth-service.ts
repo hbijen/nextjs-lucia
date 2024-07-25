@@ -4,7 +4,7 @@
 
 import { Options } from "@node-rs/argon2";
 import prisma from "../db";
-import { AppUser } from "../model/user";
+import { user } from "@prisma/client";
 import { generateIdFromEntropySize } from "lucia";
 import { encodeHex } from "oslo/encoding";
 import { alphabet, generateRandomString, sha256 } from "oslo/crypto";
@@ -36,7 +36,7 @@ export async function findUserByEmail(email: string) {
     })
 }
 
-export async function createAppUser(user: AppUser   ) {
+export async function createOAuthAppUser( user: Omit<user, "id" | "updated_at" | "created_at" | "password">   ) {
     return prisma.user.create({
         data: user
     })

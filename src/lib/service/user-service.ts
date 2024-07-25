@@ -95,3 +95,16 @@ export async function saveUser(id:string, user: AppUser) {
         }
     )
 }
+
+export async function createAppUser( user: AppUser ) {
+    return prisma.user.create({
+        data: {
+            email: user.email!,
+            provider: "email-password",
+            firstname: user.firstname,
+            lastname: user.lastname,
+            emailVerified: user.emailVerified,
+            inactive_at: user.inactive_at
+        }
+    })
+}

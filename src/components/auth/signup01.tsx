@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { ActionResult, SimpleForm } from "../forms/simple-form"
 import { hash } from "@node-rs/argon2"
-import { createAppUser, findUserByEmail, generateEmailVerificationCode, passwordHashOptions } from "@/lib/service/auth-service"
+import { findUserByEmail, generateEmailVerificationCode, passwordHashOptions } from "@/lib/service/auth-service"
 import { validEmail } from "@/lib/utils"
 import { logger } from "@/lib/logger"
 import { sendMail } from "@/lib/service/mail-service"
@@ -21,6 +21,7 @@ import VerifyEmail from "../../../emails/verify-password/verify-email"
 import { redirect } from "next/navigation"
 import { lucia } from "@/lib/auth"
 import { cookies } from "next/headers"
+import { createAppUser } from "@/lib/service/user-service"
 
 
 export function Signup01(props: SignupProps) {
@@ -108,7 +109,6 @@ async function signup(_: any, formData: FormData): Promise<ActionResult> {
     const passwordHash = await hash(password, passwordHashOptions);
     const newUser = await createAppUser({
         email: email,
-        provider: "email-password",
         password: passwordHash,
         firstname: firstname as string,
         lastname: lastname as string,

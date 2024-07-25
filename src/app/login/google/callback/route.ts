@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { OAuth2RequestError } from "arctic";
 import { google, lucia } from "@/lib/auth";
-import { createAppUser, findUserByUserId } from "@/lib/service/auth-service";
+import { createOAuthAppUser, findUserByUserId } from "@/lib/service/auth-service";
 import { logger } from "@/lib/logger";
 
 export async function GET(request: Request): Promise<Response> {
@@ -32,7 +32,7 @@ export async function GET(request: Request): Promise<Response> {
         let appUser = await findUserByUserId(`${googleUser.sub}`, "google")
 		if (!appUser) {
             // create a new user entry in the DB
-            appUser = await createAppUser({
+            appUser = await createOAuthAppUser({
                 email: googleUser.email,
                 user_id: googleUser.sub,
                 provider: "google",

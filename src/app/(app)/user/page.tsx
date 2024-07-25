@@ -40,9 +40,9 @@ export default async function ManageUsers({ searchParams }: { searchParams: User
   const [prevPage, nextPage] = getPaginationUrl(searchParams, page)
 
   return (
-    <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
-      <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0">
-        <div className="flex items-center">
+
+      <main className="grid flex-1 items-start gap-4 py-4 sm:px-6 sm:py-0">
+        <div className="flex items-center px-2 md:px-0">
           <div className="flex gap-2">
             <SearchUser name={searchParams.name ?? ''} />
           </div>
@@ -126,6 +126,5 @@ export default async function ManageUsers({ searchParams }: { searchParams: User
           </CardFooter>
         </Card>
       </main>
-    </div>
   )
 }
