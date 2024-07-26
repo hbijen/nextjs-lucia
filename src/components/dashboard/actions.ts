@@ -2,24 +2,6 @@
 
 import prisma from "@/lib/db"
 
-
-// [
-//     {
-//       activity: "stand",
-//       value: (8 / 12) * 100,
-//       fill: "var(--color-stand)",
-//     },
-//     {
-//       activity: "exercise",
-//       value: (46 / 60) * 100,
-//       fill: "var(--color-exercise)",
-//     },
-//     {
-//       activity: "move",
-//       value: (245 / 360) * 100,
-//       fill: "var(--color-move)",
-//     },
-//   ]
 export async function findActiveUsers() {
 
     const total = prisma.users.count()
@@ -31,24 +13,19 @@ export async function findActiveUsers() {
 
     return Promise.all([total, totalActive]).then(r => {
         const active = r[1], total = r[0], inactive = (r[0] - r[1])
-        return {
-            total,
-            data: [
+        return [
                 {
-                    activity: "active",
-                    label: "Active User",
+                    status: "active",
+                    label: "Active",
                     count: active,
-                    value: active / total * 100,
                     fill: "var(--color-active)"
                 },
                 {
-                    activity: "inactive",
-                    label: "Inactive User",
+                    status: "inactive",
+                    label: "Inactive",
                     count: inactive,
-                    value: inactive / total * 100,
                     fill: "var(--color-inactive)"
                 }
             ]
-        }
     })
 }
