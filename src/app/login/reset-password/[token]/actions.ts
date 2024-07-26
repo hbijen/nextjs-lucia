@@ -56,10 +56,10 @@ export async function changePassword(verifytoken: string, _:any, formData: FormD
 
     const passwordHash = await hash(password1, passwordHashOptions);
 
-    const user = await prisma.user.findUnique({ where: { id: token.userId } })
+    const user = await prisma.users.findUnique({ where: { id: token.userId } })
 
     if (user?.provider == 'email-password') {
-        await prisma.user.update({
+        await prisma.users.update({
             data: {
                 password: passwordHash,
                 emailVerified: true,

@@ -12,8 +12,9 @@ import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
 import { AppUser } from "../model/user";
 import prisma from "../db";
 import { logger } from "../logger";
+import { redirect } from "next/navigation";
 
-const adapter = new PrismaAdapter(prisma.session, prisma.user);
+const adapter = new PrismaAdapter(prisma.session, prisma.users);
 
 export const lucia = new Lucia(adapter, {
 	sessionCookie: {
@@ -68,11 +69,27 @@ export const validateRequest = cache(
 			return {session, user};
 	
 		} catch (err: any) {
-			console.error('validateRequest', err?.status)
+			console.error('validateRequest', err)
 		}
 		return NO_SESSION
 	}
-);
+)
+
+export async function logout() {
+	"use server";
+	const { session } = await validateRequest();
+	if (!session) {
+		return {
+			error: "Unauthorized"
+		};
+	}
+
+	await lucia.invalidateSession(session.id);
+
+	const sessionCookie = lucia.createBlankSessionCookie();
+	cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+	return redirect("/login");
+}
 
 export const github = OAUTH_ENABLED.GITHUB
 						? new GitHub(process.env.GITHUB_CLIENT_ID!, process.env.GITHUB_CLIENT_SECRET!)

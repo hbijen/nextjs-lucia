@@ -1,9 +1,5 @@
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSeparator,
-  InputOTPSlot,
-} from "@/components/ui/input-otp"
+import { SimpleForm } from "@/components/forms/simple-form"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -11,13 +7,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { ActionResult, SimpleForm } from "@/components/basic/simple-form"
-import { Button } from "@/components/ui/button"
-import { REGEXP_ONLY_DIGITS } from "input-otp"
-import { lucia, validateRequest } from "@/lib/auth"
-import { redirect } from "next/navigation"
-import prisma from "@/lib/db"
-import { validVerificationCode } from "@/lib/service/auth-service"
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/components/ui/input-otp"
+import { confirmCode } from "./actions"
 
 export default function VerifyEmail() {
   return (
@@ -55,37 +51,4 @@ export default function VerifyEmail() {
       </CardContent>
     </Card>
   )
-}
-
-
-async function confirmCode(_: any, formData: FormData): Promise<ActionResult> {
-  "use server"
-  const { user } = await validateRequest();
-
-	if (!user) {
-		return {
-      error: "Unauthorized request"
-    }
-	}
-
-  const code = formData.get('verify-email-code')?.toString()
-	const validCode = await validVerificationCode(user.id, code ?? '');
-
-  if (!validCode) {
-		return {
-      error: "Invalid Code."
-    }
-  }
-
-  await lucia.invalidateUserSessions(user.id);
-  await prisma.verification_code.deleteMany({
-    where: {
-      code: code,
-      userId: user.id
-    }
-  }).catch(err => {
-
-  })
-
-  return redirect('./confirm')
 }

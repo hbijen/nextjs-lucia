@@ -4,7 +4,7 @@
 
 import { Options } from "@node-rs/argon2";
 import prisma from "../db";
-import { user } from "@prisma/client";
+import { users } from "@prisma/client";
 import { generateIdFromEntropySize } from "lucia";
 import { encodeHex } from "oslo/encoding";
 import { alphabet, generateRandomString, sha256 } from "oslo/crypto";
@@ -20,7 +20,7 @@ export const passwordHashOptions: Options = {
 }
 
 export async function findUserByUserId(id: string, provider: OAuthProvider) {
-    return prisma.user.findFirst({
+    return prisma.users.findFirst({
         where: {
             user_id: id,
             provider: provider
@@ -29,15 +29,15 @@ export async function findUserByUserId(id: string, provider: OAuthProvider) {
 }
 
 export async function findUserByEmail(email: string) {
-    return prisma['user'].findUnique({
+    return prisma.users.findUnique({
         where: {
             email: email
         }
     })
 }
 
-export async function createOAuthAppUser( user: Omit<user, "id" | "updated_at" | "created_at" | "password">   ) {
-    return prisma.user.create({
+export async function createOAuthAppUser( user: Omit<users, "id" | "updated_at" | "created_at" | "password">   ) {
+    return prisma.users.create({
         data: user
     })
 }

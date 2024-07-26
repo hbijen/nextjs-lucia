@@ -14,7 +14,7 @@ datasource db {
 }
 
 // user authentication / authorization tables
-model user {
+model users {
   id        String   @id @default(cuid())
   email  String @unique // this is email
   firstname  String?
@@ -36,7 +36,7 @@ model session {
   id         String  @id @default(cuid())
   userId    String
   expiresAt DateTime
-  user       user    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  users       users    @relation(fields: [userId], references: [id], onDelete: Cascade)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt  
 }
@@ -46,7 +46,7 @@ model password_reset_token {
   userId      String
   token_hash  String
   expires_at  DateTime
-  user        user    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        users    @relation(fields: [userId], references: [id], onDelete: Cascade)
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt  
 }
@@ -56,7 +56,7 @@ model verification_code {
   userId      String
   code        String
   expires_at  DateTime
-  user        user    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        users    @relation(fields: [userId], references: [id], onDelete: Cascade)
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt  
 }

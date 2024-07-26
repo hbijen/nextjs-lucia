@@ -5,7 +5,6 @@ import { Prisma } from '@prisma/client';
 import { z } from "zod";
 import { AppUser, toAppUser } from "../model/user";
 import { Paginated, PaginationParams } from "./pagination-service";
-import { createPasswordResetToken } from "./auth-service";
 
 const SearchParams = z.object({
     name: z.string().optional(),
@@ -18,7 +17,7 @@ export async function findUsers(params: UserSearchParams): Promise<Paginated<App
 
     const { name, filter, offset, size } = SearchParams.parse(params)
 
-    const whereParam: Prisma.userWhereInput = {
+    const whereParam: Prisma.usersWhereInput = {
     };
     if (name) {
         whereParam.OR = [
@@ -35,9 +34,9 @@ export async function findUsers(params: UserSearchParams): Promise<Paginated<App
     const skip = offset || 0
     const take = size || 10
 
-    const a = prisma.user.count({where: whereParam})
+    const a = prisma.users.count({where: whereParam})
 
-    const b = prisma.user.findMany({
+    const b = prisma.users.findMany({
         where: whereParam,
         skip: skip,
         take: take,
@@ -58,7 +57,7 @@ export async function findUsers(params: UserSearchParams): Promise<Paginated<App
 }
 
 export async function disableUser(id: string, disable: boolean) {
-    return prisma.user.update(
+    return prisma.users.update(
         {
             data: { inactive_at: disable ? new Date() : null },
             where: { id: id }
@@ -67,7 +66,7 @@ export async function disableUser(id: string, disable: boolean) {
 }
 
 export async function getUser(id: string): Promise<AppUser | null> {
-    return prisma.user.findUnique({
+    return prisma.users.findUnique({
         select: {
             id: true,
             email: true,
@@ -88,7 +87,7 @@ export async function getUser(id: string): Promise<AppUser | null> {
 
 export async function saveUser(id:string, user: AppUser) {
     const {firstname, lastname} = user
-    return prisma.user.update(
+    return prisma.users.update(
         {
             data: { firstname, lastname },
             where: { id: id }
@@ -97,7 +96,7 @@ export async function saveUser(id:string, user: AppUser) {
 }
 
 export async function createAppUser( user: AppUser ) {
-    return prisma.user.create({
+    return prisma.users.create({
         data: {
             email: user.email!,
             provider: "email-password",

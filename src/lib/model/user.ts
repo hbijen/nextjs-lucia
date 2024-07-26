@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { user, session } from "@prisma/client";
+import { users, session } from "@prisma/client";
 
 // export type AppUser = user
 
@@ -28,7 +28,7 @@ export const AppUser = z.object(
 //   export const AppUser = z.optional(UserSchema)
 export type AppUser = z.infer<typeof AppUser>
 
-export const toAppUser = (usr: Omit<user, 'password'>): AppUser | null => {
+export const toAppUser = (usr: Omit<users, 'password'>): AppUser | null => {
   const {id, email, inactive_at, created_at, updated_at} = usr
   return {
     id, email, inactive_at, created_at, updated_at,
