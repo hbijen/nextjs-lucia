@@ -1,4 +1,5 @@
 import {
+  FlaskConical,
   Home,
   LineChart,
   Package2,
@@ -57,6 +58,13 @@ export default async function AppLayout({
               </Link>
 
               <Separator className="border-b mt-8"></Separator>
+              <Link href="/experimental"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+              >
+                <FlaskConical className="h-4 w-4" />
+                <span className="sr-only xl:not-sr-only">Experimental</span>
+              </Link>
+
               <AccountSettings></AccountSettings>
             </nav>
           </div>
