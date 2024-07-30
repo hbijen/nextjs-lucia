@@ -1,21 +1,21 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import {
 	Form
 } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
 import { UseFormReturn, useForm } from "react-hook-form";
 
 
-import InputField from '@/components/forms/fields/input-field';
+import { InputField } from '@/components/forms/fields/input-field';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import React, { useState } from "react";
-import { ztf } from 'zod-to-fields';
 import { zodResolver } from "@hookform/resolvers/zod";
-
+import React, { useState } from "react";
+import { ZodTypeAny } from "zod";
+import { ztf } from 'zod-to-fields';
 
 export type DynamicFormProps = {
-	formSchema: any
+	formSchema: ZodTypeAny
 	formFields: any
 	defaultValues?: any
 	action?: (formData: FormData) => void
@@ -39,6 +39,7 @@ export function DynamicForm({ formSchema, formFields, defaultValues, children, o
 			</CardHeader>
 			<CardContent >
 				<Form {...formReturn}>
+
 					{renderFields(formReturn, formFields)}
 
 					<div className="text-center p-4 col-span-2">
@@ -51,13 +52,16 @@ export function DynamicForm({ formSchema, formFields, defaultValues, children, o
 
 }
 
-const renderField = (formReturn: UseFormReturn, field: ztf.GenericSingleFieldOptions, key = '') => {
+const renderField = (formReturn: UseFormReturn, field: ztf.GenericSingleFieldOptions, key: string) => {
 	const fieldKey = key ? `${key}.${field.name}` : field.name
 	//const error = get(errors, fieldKey)
 	const isSelect = field.tag === 'select'
+	field["aria-description"]
 
 	return (
-		<InputField formReturn={formReturn} field={field}></InputField>
+		<>
+			<InputField key={fieldKey} fieldKey={fieldKey} formReturn={formReturn} field={field}></InputField>
+		</>
 	)
 	//   <div className='form-field' key={field.name}>
 	//     <label className='form-label' htmlFor={field.id}>
@@ -98,7 +102,6 @@ const renderFields = (
 							className={`form-nested level-${level}`}
 							key={`${key}_${index}`}
 						>
-							<h3>{field[key].description || key.toUpperCase()}</h3>
 							{renderFields(formReturn, potentialArray, level + 1, newKey)}
 						</div>
 					)
@@ -109,7 +112,7 @@ const renderFields = (
 		}
 
 		if (field.tag === 'input' || field.tag === 'select') {
-			return renderField(formReturn, field, parentKey)
+			return renderField(formReturn, field, `${parentKey}_${index}`)
 		}
 	})
 }

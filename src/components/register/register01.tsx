@@ -1,47 +1,46 @@
 "use client"
 
-import { z } from 'zod'
-import { ztf } from 'zod-to-fields'
+import ztf from 'zod-to-fields'
 import { DynamicForm } from '../forms/dynamic-form'
+import { Person } from '../forms/schema/person'
 
 function Register01() {
 
-    const formSchema = z.object({
-        firstname: z.string({ required_error: 'Name is required' })
-            .min(1, { message: 'name can not be empty.' }),
-        lastName: z.string().min(1, { message: 'lastName can not be empty.' }),
-        email: z.string(),
-    })
+    const formSchema = Person
 
-    const options = ztf
-        .createOptions(formSchema)
-        .withFieldOptions({
-            firstname: {
-                label: 'First Name',
-                type: 'text',
-            },
-            lastName: {
-                label: 'Last Name',
-                type: 'text',
-            },
-            email: {
-                type: 'email',
-            }
-        })
-        .build()
-
-    const formFields = ztf.generateFields(formSchema, options)
-
-    // const handleSubmit = (e: { preventDefault: () => void }) => {
-    //     e.preventDefault()
-
-    //     const result = FormSchema.safeParse(formValues)
-    //     if (result.success) {
-    //         setErrors({})
-    //     } else {
-    //         setErrors(result.error.formErrors.fieldErrors)
+    // const uiFields: DynamicFieldOption<Person> = {
+    //     name: {
+    //         firstname: {
+    //             fieldType: 'input',
+    //             "aria-label": "First Name",
+    //         },
+    //         lastname: {
+    //             fieldType: 'input',
+    //             "aria-label": "Last Name",
+    //         }
     //     }
     // }
+    const options = ztf.createOptions(Person).withFieldOptions({
+        name: {
+            firstname: {
+                "aria-label": "First Name",
+            },
+            lastname: {
+                "aria-label": "Last Name",
+            }
+        },
+        contact: {
+            phone: {
+                "aria-label": "Phone",
+            },
+            email: {
+                "aria-label": "Email",
+            },
+        }
+
+    }).build()
+    
+    const formFields = ztf.generateFields(Person, options)
 
     return (
         <DynamicForm formSchema={formSchema} formFields={formFields}>

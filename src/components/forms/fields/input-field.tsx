@@ -8,16 +8,17 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-import { FieldProps } from "./props"
+import { FieldProps } from "./types"
 
-export default function InputField({formReturn, field} : FieldProps) {
+export function InputField({fieldKey, formReturn, field} : FieldProps) {
     return (
         <FormField
+            key={fieldKey}
             control={formReturn.control}
             name={field.name}
             render={(props) => (
                 <FormItem>
-                    <FormLabel>{field.label}</FormLabel>
+                    <FormLabel>{field["aria-label"] || field.label}</FormLabel>
                     <FormControl>
                         <Input placeholder={field["aria-placeholder"]} {...props.field} />
                     </FormControl>
