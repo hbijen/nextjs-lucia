@@ -1,9 +1,7 @@
 import {
-  FlaskConical,
   Home,
   LineChart,
   Package2,
-  PocketKnife,
   Settings,
   Users
 } from "lucide-react"
@@ -33,8 +31,8 @@ export default async function AppLayout({
         <div className="flex min-h-screen flex-col gap-4">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
             <Link href="/" className="flex items-center gap-2 font-semibold">
-              <PocketKnife className="h-6 w-6" />
-              <span className="sr-only xl:not-sr-only">Demo Corp</span>
+              <Package2 className="h-6 w-6" />
+              <span className="sr-only xl:not-sr-only">Acme Inc</span>
             </Link>
           </div>
           <div className="flex-1">
@@ -59,13 +57,6 @@ export default async function AppLayout({
               </Link>
 
               <Separator className="border-b mt-8"></Separator>
-              <Link href="/experimental"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-              >
-                <FlaskConical className="h-4 w-4" />
-                <span className="sr-only xl:not-sr-only">Experimental</span>
-              </Link>
-
               <AccountSettings></AccountSettings>
             </nav>
           </div>
