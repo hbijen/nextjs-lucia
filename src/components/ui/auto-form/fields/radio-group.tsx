@@ -30,8 +30,8 @@ export default function AutoFormRadioGroup({
   }
 
   return (
-    <div>
-      <FormItem>
+    <>
+      <FormItem className={fieldConfigItem?.className || "flex w-full flex-col justify-start"}>
         <AutoFormLabel
           label={fieldConfigItem?.label || label}
           isRequired={isRequired}
@@ -58,6 +58,6 @@ export default function AutoFormRadioGroup({
         <FormMessage />
       </FormItem>
       <AutoFormTooltip fieldConfigItem={fieldConfigItem} />
-    </div>
+    </>
   );
 }

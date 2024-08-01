@@ -15,6 +15,7 @@ import {
   getDefaultValues,
   getObjectFormSchema,
 } from "./utils";
+import { DevFormError } from "@/components/forms/debug";
 
 export function AutoFormSubmit({
   children,
@@ -91,12 +92,14 @@ function AutoForm<SchemaType extends ZodObjectOrWrapped>({
 
   return (
     <div className="w-full">
+      <DevFormError useForm={form}></DevFormError>
       <Form {...form}>
         <form
           onSubmit={(e) => {
             form.handleSubmit(onSubmit)(e);
           }}
           className={cn("space-y-5", className)}
+          noValidate={true}
         >
           <AutoFormObject
             schema={objectFormSchema}

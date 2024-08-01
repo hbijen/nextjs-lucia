@@ -63,7 +63,7 @@ export default function AutoFormObject<
   };
 
   return (
-    <Accordion type="multiple" className="space-y-5 border-none">
+    <>
       {Object.keys(shape).map((name) => {
         let item = shape[name] as z.ZodAny;
         item = handleIfZodNumber(item) as z.ZodAny;
@@ -80,12 +80,30 @@ export default function AutoFormObject<
         if (isHidden) {
           return null;
         }
+        const fieldConfigItem: FieldConfigItem = fieldConfig?.[name] ?? {};
 
         if (zodBaseType === "ZodObject") {
+          const ParentElement = fieldConfigItem.renderParent ?? null;
+
           return (
-            <AccordionItem value={name} key={key} className="border-none">
+            ParentElement ?
+            <ParentElement key={`${key}.parent`}>
+                <AutoFormObject
+                  schema={item as unknown as z.ZodObject<any, any>}
+                  form={form}
+                  fieldConfig={
+                    (fieldConfig?.[name] ?? {}) as FieldConfig<
+                      z.infer<typeof item>
+                    >
+                  }
+                  path={[...path, name]}
+                />
+            </ParentElement>
+            :
+            <Accordion type="multiple" className="space-y-5 border-none">
+            <AccordionItem value={name} key={key} className="border-none py-2">
               <AccordionTrigger>{itemName}</AccordionTrigger>
-              <AccordionContent className="p-2">
+              <AccordionContent>
                 <AutoFormObject
                   schema={item as unknown as z.ZodObject<any, any>}
                   form={form}
@@ -98,6 +116,7 @@ export default function AutoFormObject<
                 />
               </AccordionContent>
             </AccordionItem>
+            </Accordion>
           );
         }
         if (zodBaseType === "ZodArray") {
@@ -113,7 +132,7 @@ export default function AutoFormObject<
           );
         }
 
-        const fieldConfigItem: FieldConfigItem = fieldConfig?.[name] ?? {};
+        //const fieldConfigItem: FieldConfigItem = fieldConfig?.[name] ?? {};
         const zodInputProps = zodToHtmlInputProps(item);
         const isRequired =
           isRequiredByDependency ||
@@ -178,6 +197,6 @@ export default function AutoFormObject<
           />
         );
       })}
-    </Accordion>
+    </>
   );
 }

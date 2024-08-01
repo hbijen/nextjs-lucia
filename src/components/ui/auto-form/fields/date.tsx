@@ -12,7 +12,7 @@ export default function AutoFormDate({
   fieldProps,
 }: AutoFormInputComponentProps) {
   return (
-    <FormItem>
+    <FormItem className={fieldConfigItem?.className || "flex w-full flex-col justify-start"}>
       <AutoFormLabel
         label={fieldConfigItem?.label || label}
         isRequired={isRequired}

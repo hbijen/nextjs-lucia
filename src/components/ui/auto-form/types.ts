@@ -2,12 +2,13 @@ import { ControllerRenderProps, FieldValues } from "react-hook-form";
 import * as z from "zod";
 import { INPUT_COMPONENTS } from "./config";
 
-export type FieldConfigItem = {
+export type   FieldConfigItem = {
   description?: React.ReactNode;
   inputProps?: React.InputHTMLAttributes<HTMLInputElement> & {
     showLabel?: boolean;
   };
   label?: string;
+  className?: string
   fieldType?:
     | keyof typeof INPUT_COMPONENTS
     | React.FC<AutoFormInputComponentProps>;

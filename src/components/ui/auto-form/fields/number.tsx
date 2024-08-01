@@ -14,7 +14,7 @@ export default function AutoFormNumber({
   const showLabel = _showLabel === undefined ? true : _showLabel;
 
   return (
-    <FormItem>
+    <FormItem className={fieldConfigItem?.className || "flex w-full flex-col justify-start"}>
       {showLabel && (
         <AutoFormLabel
           label={fieldConfigItem?.label || label}

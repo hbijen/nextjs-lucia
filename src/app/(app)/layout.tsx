@@ -29,7 +29,7 @@ export default async function AppLayout({
 
   return (
     <div className="grid min-h-screen w-full sm:grid-cols-[60px_1fr] xl:grid-cols-[280px_1fr]">
-      <div className="hidden min-h-screen border-r bg-muted/40 md:block">
+      <div className="hidden min-h-screen border-r bg-muted/40 sm:block">
         <div className="flex min-h-screen flex-col gap-4">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
             <Link href="/" className="flex items-center gap-2 font-semibold">
@@ -49,7 +49,7 @@ export default async function AppLayout({
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
                 <UserRoundPlus className="h-4 w-4" />
-                <span className="sr-only xl:not-sr-only">Register</span>
+                <span className="sr-only xl:not-sr-only">Forms</span>
               </Link>
 
               <Link href="#"
@@ -71,7 +71,7 @@ export default async function AppLayout({
           </div>
         </div>
       </div>
-      <main className="sm:p-4 lg:p-6">
+      <main className="p-4 lg:p-6">
         {children}
       </main>
       <Toaster />
