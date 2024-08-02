@@ -52,12 +52,6 @@ export default async function AppLayout({
                 <span className="sr-only xl:not-sr-only">Forms</span>
               </Link>
 
-              <Link href="#"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-              >
-                <LineChart className="h-4 w-4" />
-                <span className="sr-only xl:not-sr-only">Analytics</span>
-              </Link>
               <Link href="/user"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >

@@ -50,7 +50,7 @@ export default function Register03() {
                             fieldType: 'passport',
                             renderParent: (props: any) => {
                                 return (
-                                    <div className="row-span-2 place-items-end">
+                                    <div className="row-span-2 justify-self-end">
                                         {props.children}
                                     </div>
                                 )

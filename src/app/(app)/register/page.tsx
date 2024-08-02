@@ -6,7 +6,7 @@ import Register03 from "@/components/register/register03";
 
 export default function Register() {
     return (
-        <Tabs defaultValue="account" className="max-w-2xl">
+        <Tabs defaultValue="example1" className="max-w-2xl">
             <TabsList>
                 <TabsTrigger value="example1">Example 1</TabsTrigger>
                 <TabsTrigger value="example2">Example 2</TabsTrigger>
