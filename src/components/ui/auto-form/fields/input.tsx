@@ -15,7 +15,7 @@ export default function AutoFormInput({
   const type = fieldProps.type || "text";
 
   return (
-      <FormItem className={fieldConfigItem?.className || "flex w-full flex-col justify-start"}>
+      <FormItem className={fieldConfigItem?.className}>
         {showLabel && (
           <AutoFormLabel
             label={fieldConfigItem?.label || label}
