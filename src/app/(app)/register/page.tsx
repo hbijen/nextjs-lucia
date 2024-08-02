@@ -1,19 +1,21 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Register01 from "@/components/register/register01";
 import Register02 from "@/components/register/register02";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Register03 from "@/components/register/register03";
 
 export default function Register() {
     return (
         <Tabs defaultValue="account" className="max-w-2xl">
             <TabsList>
-                <TabsTrigger value="account">Example 1</TabsTrigger>
-                <TabsTrigger value="password">Example 2</TabsTrigger>
+                <TabsTrigger value="example1">Example 1</TabsTrigger>
+                <TabsTrigger value="example2">Example 2</TabsTrigger>
+                <TabsTrigger value="example3">Example 3</TabsTrigger>
             </TabsList>
-            <TabsContent value="account">
+            <TabsContent value="example1">
                 <Register01></Register01>
             </TabsContent>
-            <TabsContent value="password">
+            <TabsContent value="example2">
                 <Card className="mx-auto">
                     <CardHeader>
                         <CardTitle>Registration Form</CardTitle>
@@ -23,6 +25,17 @@ export default function Register() {
                     </CardContent>
                 </Card>
             </TabsContent>
+            <TabsContent value="example3">
+                <Card className="mx-auto">
+                    <CardHeader>
+                        <CardTitle>With File Upload</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <Register03></Register03>
+                    </CardContent>
+                </Card>
+            </TabsContent>
+
         </Tabs>
     )
 }

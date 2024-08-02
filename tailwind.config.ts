@@ -19,6 +19,9 @@ const config = {
       },
     },
     extend: {
+      aspectRatio: {
+        '8/10': '8 / 10'
+      },
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
       },      
