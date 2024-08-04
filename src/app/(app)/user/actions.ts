@@ -76,7 +76,7 @@ export async function sendAccountCreationLink(id: string, name: string, email: s
         resetPasswordLink: resetLink
     })
     await sendMail(email, "Account Created", await renderAsync(tmpl))
-        .catch(err => {
+        .catch((err: any) => {
             logger.error('sendmail', err)
             return {
                 error: `Failed. ${err.message}`

@@ -53,7 +53,7 @@ export function AddEditUser({ children }: AddEditUserProps) {
             } else {
                 setInfo({error: r.error ?? '', success: ''})
             }
-        }).catch(err =>{
+        }).catch((err: any) =>{
             console.error('r ', err)
         })
     }

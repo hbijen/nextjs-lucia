@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useToast } from "@/components/ui/use-toast"
 import { AppUser } from "@/lib/model/user"
 import { getUser } from "@/lib/service/user-service"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -18,7 +19,6 @@ import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { updateUser } from "../actions"
-import { useToast } from "@/components/ui/use-toast"
 
 export default function ManageUsers({ params }: { params: any }) {
   console.log('searchParams', params.id)
@@ -59,7 +59,7 @@ export default function ManageUsers({ params }: { params: any }) {
             description: r.error,
           })
         }
-      }).catch(err => {
+      }).catch((err: any) => {
         toast({
           variant: "destructive",
           title: "Failed Saved.",

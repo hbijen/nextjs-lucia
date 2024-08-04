@@ -3,10 +3,10 @@
 import { ActionResult } from "@/components/forms/simple-form";
 import { logger } from "@/lib/logger";
 import { createPasswordResetToken, findUserByEmail } from "@/lib/service/auth-service";
-import { sendMail } from "@/lib/service/mail-service"
-import { renderAsync } from "@react-email/components"
-import EmailResetPassword from "../../../../emails/reset-password/reset-password"
+import { sendMail } from "@/lib/service/mail-service";
+import { renderAsync } from "@react-email/components";
 import { redirect } from "next/navigation";
+import EmailResetPassword from "../../../../emails/reset-password/reset-password";
 
 export async function resetPassword(_: any, formData: FormData): Promise<ActionResult> {
     
@@ -35,7 +35,7 @@ export async function resetPassword(_: any, formData: FormData): Promise<ActionR
             resetPasswordLink: resetLink
         })
         await sendMail(email, "Password Reset", await renderAsync(tmpl))
-            .catch(err => {
+            .catch((err: any) => {
                 logger.error('sendmail', err)
                 return {
                     error: `Failed. ${err.message}`

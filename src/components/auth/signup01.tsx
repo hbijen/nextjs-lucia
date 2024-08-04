@@ -115,7 +115,7 @@ async function signup(_: any, formData: FormData): Promise<ActionResult> {
         lastname: lastname as string,
         emailVerified: false,
         inactive_at: new Date()
-    }).catch(err => {
+    }).catch((err: any) => {
         logger.debug("create user error===============", err)
         logger.debug("create user error+++++++++++++", JSON.stringify(err))
         return null

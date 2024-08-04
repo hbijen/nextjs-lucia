@@ -32,7 +32,7 @@ export async function confirmCode(_: any, formData: FormData): Promise<ActionRes
         code: code,
         userId: user.id
       }
-    }).catch(err => {
+    }).catch((err: any) => {
       logger.error("confirmCode", err)
     })
   
