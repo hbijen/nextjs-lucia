@@ -69,6 +69,7 @@ export async function changePassword(verifytoken: string, _:any, formData: FormD
                 id: token.userId
             }
         }).catch(err => {
+            logger.error("changePassword", err)
             return {
                 success: "Password update failed. If error persists, Please use forgot password to reset your password."
             }

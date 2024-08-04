@@ -1,7 +1,5 @@
 import {
   Home,
-  LineChart,
-  Package2,
   PocketKnife,
   Settings,
   UserRoundPlus,
@@ -14,12 +12,22 @@ import { Separator } from "@/components/ui/separator"
 import { Toaster } from "@/components/ui/toaster"
 import { logout, validateRequest } from "@/lib/auth"
 import { redirect } from "next/navigation"
-// import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu"
+import { ReactNode } from "react"
+
 
 export default async function AppLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
 
   const { user } = await validateRequest();
@@ -72,16 +80,6 @@ export default async function AppLayout({
     </div>
   )
 }
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu"
 
 export function AccountSettings() {
   return (

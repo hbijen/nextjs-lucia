@@ -13,13 +13,13 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input"
 import { AppUser } from "@/lib/model/user"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useState } from "react"
+import { ReactNode, useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { addUser } from "./actions"
 
 type AddEditUserProps = {
-    children?: React.ReactNode | undefined,
+    children?: ReactNode | undefined,
 }
 
 export function AddEditUser({ children }: AddEditUserProps) {

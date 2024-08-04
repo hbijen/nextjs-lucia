@@ -3,6 +3,7 @@
 import { ActionResult } from "@/components/forms/simple-form"
 import { lucia, validateRequest } from "@/lib/auth"
 import prisma from "@/lib/db"
+import { logger } from "@/lib/logger"
 import { validVerificationCode } from "@/lib/service/auth-service"
 import { redirect } from "next/navigation"
 
@@ -32,7 +33,7 @@ export async function confirmCode(_: any, formData: FormData): Promise<ActionRes
         userId: user.id
       }
     }).catch(err => {
-  
+      logger.error("confirmCode", err)
     })
   
     return redirect('./confirm')

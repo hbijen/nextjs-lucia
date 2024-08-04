@@ -1,7 +1,8 @@
 import Image from "next/image"
 
-import { Login } from "./login"
 import Link from "next/link"
+import { Login } from "./login"
+import { LoginProps } from "./types"
 
 export function Login02(props: LoginProps) {
   return (

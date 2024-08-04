@@ -2,14 +2,12 @@ import {
     Pagination,
     PaginationContent,
     PaginationEllipsis,
-    PaginationItem,
-    PaginationNext,
-    PaginationPrevious,
+    PaginationItem
 } from "@/components/ui/pagination"
 import { Paginated } from "@/lib/service/pagination-service"
-import { Button } from "../ui/button"
-import Link from "next/link"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import Link from "next/link"
+import { Button } from "../ui/button"
 
 
 type PaginationProps = {

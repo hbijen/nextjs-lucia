@@ -1,8 +1,7 @@
 "use client";
 import AutoForm, { AutoFormSubmit } from "@/components/ui/auto-form";
+import { ReactNode } from "react";
 import * as z from "zod";
-import { DependencyType } from "../ui/auto-form/types";
-import { Children } from "react";
 
 // Define your form schema using zod
 const formSchema = z.object({
@@ -82,7 +81,7 @@ export default function Register02() {
     );
 }
 
-function Column2Grid({ children }: { children: React.ReactNode }) {
+function Column2Grid({ children }: { children: ReactNode }) {
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {children}
@@ -90,7 +89,7 @@ function Column2Grid({ children }: { children: React.ReactNode }) {
     )
 }
 
-function Column12Grid({ children }: { children: React.ReactNode }) {
+function Column12Grid({ children }: { children: ReactNode }) {
     return (
         <div className="grid grid-cols-12 gap-4">
             {children}

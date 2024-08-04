@@ -34,6 +34,7 @@ export const lucia = new Lucia(adapter, {
 });
 
 declare module "lucia" {
+	// eslint-disable-next-line no-unused-vars
 	interface Register {
 		Lucia: typeof lucia;
 		DatabaseUserAttributes: Pick<AppUser, "user_id" | "email" | "provider" | "firstname" | "lastname">;

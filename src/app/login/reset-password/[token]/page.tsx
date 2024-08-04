@@ -1,10 +1,7 @@
 "use client"
-import Image from "next/image"
 import Link from "next/link"
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { SubmitButton } from "@/components/forms/app-button"
 import { SimpleForm } from "@/components/forms/simple-form"
 import {
     Card,
@@ -12,10 +9,11 @@ import {
     CardDescription,
     CardHeader,
     CardTitle,
-  } from "@/components/ui/card"
+} from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { useParams } from "next/navigation"
 import { changePassword } from "./actions"
-import { SubmitButton } from "@/components/forms/app-button"
   
 export default function ResetPassword() {
     let { token } = useParams();

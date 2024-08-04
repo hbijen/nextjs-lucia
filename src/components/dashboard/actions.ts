@@ -12,7 +12,7 @@ export async function findActiveUsers() {
     })
 
     return Promise.all([total, totalActive]).then(r => {
-        const active = r[1], total = r[0], inactive = (r[0] - r[1])
+        const active = r[1], inactive = (r[0] - r[1])
         return [
                 {
                     status: "active",

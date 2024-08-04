@@ -1,16 +1,15 @@
-import Image from "next/image"
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { ActionResult, SimpleForm } from "../forms/simple-form";
-import { verify } from "@node-rs/argon2";
-import { findUserByEmail, passwordHashOptions } from "@/lib/service/auth-service";
-import { lucia } from "@/lib/auth";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { lucia } from "@/lib/auth"
 import { logger } from "@/lib/logger"
+import { findUserByEmail, passwordHashOptions } from "@/lib/service/auth-service"
+import { verify } from "@node-rs/argon2"
+import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
+import { ActionResult, SimpleForm } from "../forms/simple-form"
 
 export function Login() {
 

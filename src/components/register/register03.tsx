@@ -1,10 +1,7 @@
 "use client";
 import AutoForm, { AutoFormSubmit } from "@/components/ui/auto-form";
+import { ReactNode } from "react";
 import * as z from "zod";
-import { DependencyType } from "../ui/auto-form/types";
-import { Children } from "react";
-import Image from "next/image";
-import { cn } from "@/lib/utils";
 
 // Define your form schema using zod
 const formSchema = z.object({
@@ -82,35 +79,10 @@ export default function Register03() {
     );
 }
 
-function Fix2Grid({ children }: { children: React.ReactNode }) {
+function Fix2Grid({ children }: { children: ReactNode }) {
     return (
         <div className="grid grid-cols-2 gap-4">
             {children}
-        </div>
-    )
-}
-
-interface PhotoProps extends React.HTMLAttributes<HTMLDivElement> {
-    url: string
-    name: string
-    aspectRatio?: "portrait" | "square"
-    width?: number
-    height?: number
-}
-
-function Photo({ url, name, height, width, aspectRatio }: PhotoProps) {
-    return (
-        <div className="overflow-hidden rounded-md">
-            <Image
-                src={url}
-                alt={name}
-                width={width}
-                height={height}
-                className={cn(
-                    "h-auto w-auto object-cover transition-all",
-                    aspectRatio === "portrait" ? "aspect-[3/4]" : "aspect-square"
-                )}
-            />
         </div>
     )
 }

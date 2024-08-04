@@ -1,13 +1,15 @@
 "use client";
 
+import { ReactNode } from "react";
 import { useFormState } from "react-dom";
 
 export function SimpleForm({
 	children,
 	action
 }: {
-	children: React.ReactNode;
-	action: (prevState: any, formData: FormData) => Promise<ActionResult>;
+	children: ReactNode;
+	// eslint-disable-next-line no-unused-vars
+	action: (prevState: any, formData: FormData) => Promise<ActionResult>
 }) {
 	const [state, formAction] = useFormState(action, {});
 	return (

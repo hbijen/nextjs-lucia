@@ -6,8 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Login } from "./login"
 import Link from "next/link"
+import { Login } from "./login"
+import { LoginProps } from "./types"
 
 export function Login01(props: LoginProps) {
   return (

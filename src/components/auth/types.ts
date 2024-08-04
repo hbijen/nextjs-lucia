@@ -1,8 +1,8 @@
-type LoginProps = {
+export type LoginProps = {
     signupUrl?: string
 }
 
-type SignupProps = {
+export type SignupProps = {
     loginUrl?: string
     verifyEmail?: boolean
 }

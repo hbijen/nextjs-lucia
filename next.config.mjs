@@ -4,7 +4,11 @@ const nextConfig = {
         serverComponentsExternalPackages: [
             "@node-rs/argon2"
         ]
+    },
+    eslint: {
+        dirs: ['src']
     }
+    
 };
 
 export default nextConfig;
