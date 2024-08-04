@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client';
 const prismaClientSingleton = (): PrismaClient => {
 
     if (process.env.NODE_ENV === "development") {
@@ -10,7 +10,7 @@ const prismaClientSingleton = (): PrismaClient => {
                 }
             ]
         })
-        client.$on('query', async (e) => {
+        client.$on('query', async (e: any) => {
             console.log('query: ', e.query)
             console.log('params: ', e.params)
         });
