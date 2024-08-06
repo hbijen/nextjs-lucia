@@ -1,4 +1,3 @@
-"use server"
 /**
  * This file is used for any customization or integration with lucia auth
  */
