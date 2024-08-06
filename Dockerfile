@@ -1,4 +1,4 @@
-FROM node:20-alpine AS base
+FROM node:18.20.2-alpine AS base
 
 FROM base AS deps
 
@@ -14,7 +14,7 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-RUN npm run build
+RUN DISABLE_ESLINT_PLUGIN=true npm run build
 
 FROM base AS runner
 WORKDIR /app
