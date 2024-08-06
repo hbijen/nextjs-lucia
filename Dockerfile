@@ -1,4 +1,4 @@
-FROM node:18.20.2-alpine AS base
+FROM node:20-alpine AS base
 
 FROM base AS deps
 
@@ -13,8 +13,10 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
 RUN npx prisma generate
 RUN npm run build
+RUN ls -al /app
 
 FROM base AS runner
 WORKDIR /app
