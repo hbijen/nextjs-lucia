@@ -13,8 +13,8 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-
-RUN DISABLE_ESLINT_PLUGIN=true npm run build
+RUN ls -l prisma
+RUN npm run build
 
 FROM base AS runner
 WORKDIR /app
