@@ -10,7 +10,6 @@ import {
   Section,
   Text,
 } from "@react-email/components";
-import * as React from "react";
 
 interface VerifyEmailProps {
   verificationCode?: string
@@ -31,7 +30,7 @@ export default function VerifyEmail({
           <Section style={coverSection}>
             <Section style={imageSection}>
               <Img
-                src={`${baseUrl}/static/email-logo.png`}
+                src={`${baseUrl}/logo/logo.png`}
                 width="40"
                 height="33"
                 alt="Logo"

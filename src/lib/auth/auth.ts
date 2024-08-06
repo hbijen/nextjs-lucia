@@ -1,18 +1,19 @@
+"use server"
 /**
  * This file is used for any customization or integration with lucia auth
  */
+import { GitHub, Google } from "arctic";
 import { Lucia } from "lucia";
 import { cookies } from "next/headers";
 import { cache } from "react";
-import { GitHub, Google } from "arctic";
 
-import type { Session, User } from "lucia";
-import { OAUTH_ENABLED } from "../utils";
 import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
-import { AppUser } from "../model/user";
+import type { Session, User } from "lucia";
+import { redirect } from "next/navigation";
 import prisma from "../db";
 import { logger } from "../logger";
-import { redirect } from "next/navigation";
+import { AppUser } from "../model/user";
+import { OAUTH_ENABLED } from "../utils";
 
 const adapter = new PrismaAdapter(prisma.session, prisma.users);
 

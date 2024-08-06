@@ -116,12 +116,12 @@ async function signup(_: any, formData: FormData): Promise<ActionResult> {
         emailVerified: false,
         inactive_at: new Date()
     }).catch((err: any) => {
-        logger.debug("create user error===============", err)
-        logger.debug("create user error+++++++++++++", JSON.stringify(err))
+        logger.error("create user error===============", err)
+        logger.error("create user error+++++++++++++", JSON.stringify(err))
         return null
     })
     
-    logger.debug("user created: ", newUser?.id)
+    logger.info("user-created", {id: newUser?.id})
 
     if (!newUser) {
         return { error: "Unable to create account. Please try again!" }

@@ -5,12 +5,10 @@ import {
   Head,
   Html,
   Img,
-  Link,
   Preview,
   Section,
-  Text,
+  Text
 } from "@react-email/components";
-import * as React from "react";
 
 interface EmailResetPasswordProps {
   userFirstname: string;
@@ -31,7 +29,7 @@ export const EmailResetPassword = ({
       <Body style={main}>
         <Container style={container}>
           <Img
-            src={`${baseUrl}/static/email-logo.png`}
+            src={`${baseUrl}/logo/logo.png`}
             width="40"
             height="33"
             alt="Logo"
