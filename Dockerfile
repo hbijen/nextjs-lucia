@@ -16,7 +16,6 @@ COPY . .
 
 RUN npx prisma generate
 RUN npm run build
-RUN ls -al /app
 
 FROM base AS runner
 WORKDIR /app
