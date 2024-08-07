@@ -1,5 +1,3 @@
-"use client"
-
 import {
     Body,
     Container,
@@ -11,22 +9,19 @@ import {
     Section,
     Text
 } from "@react-email/components";
-import { ReactNode, createContext, useContext } from "react";
+import { ReactNode } from "react";
 import { defaultText } from "./styles";
 
-type EmailContext = {
+export type EmailProps = {
     baseUrl?: string
     appName?: string
 }
-const emailInfo = {
+export const emailContext: EmailProps = {
     baseUrl: process.env.APP_URL ?? "",
     appName: process.env.EMAIL_APP_NAME ?? "DemoApp"
 }
 
-export const EmailContext = createContext(emailInfo)
-
 const LogoHeader = () => {
-    const emailContext = useContext(EmailContext)
     return (
         <Section style={header}>
             {emailContext.baseUrl
@@ -38,7 +33,6 @@ const LogoHeader = () => {
 }
 
 const CautionText = () => {
-    const emailContext = useContext(EmailContext)
     return (
         <Section>
             <Text style={cautionText}>
@@ -85,9 +79,7 @@ export function EmailTemplate({ children }: { children: ReactNode }) {
     return (
         <Html>
             <Head />
-            <EmailContext.Provider value={emailInfo}>
-                {children}
-            </EmailContext.Provider>
+            {children}
         </Html>
     );
 }

@@ -3,8 +3,7 @@ import {
   Heading,
   Text
 } from "@react-email/components";
-import { useContext } from "react";
-import { EmailContext, EmailTemplate } from "../email-template";
+import { EmailTemplate, emailContext } from "../email-template";
 import { defaultButton, defaultText, h1 } from "../styles";
 
 interface EmailAccountCreationProps {
@@ -16,7 +15,6 @@ export const EmailAccountCreation = ({
   userFirstname = "User",
   resetPasswordLink = "",
 }: EmailAccountCreationProps) => {
-  const emailContext = useContext(EmailContext)
 
   return (
     <EmailTemplate>

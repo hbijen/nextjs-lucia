@@ -3,8 +3,7 @@ import {
   Heading,
   Text
 } from "@react-email/components";
-import { useContext } from "react";
-import { EmailContext, EmailTemplate } from "../email-template";
+import { EmailTemplate, emailContext } from "../email-template";
 import { defaultButton, defaultText, h1 } from "../styles";
 
 interface EmailResetPasswordProps {
@@ -16,7 +15,7 @@ export const EmailResetPassword = ({
   userFirstname = "User",
   resetPasswordLink = "",
 }: EmailResetPasswordProps) => {
-  const emailContext = useContext(EmailContext)
+
   return (
     <EmailTemplate>
       <EmailTemplate.Preview>Reset your password</EmailTemplate.Preview>

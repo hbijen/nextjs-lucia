@@ -3,8 +3,7 @@ import {
   Section,
   Text
 } from "@react-email/components";
-import { useContext } from "react";
-import { EmailContext, EmailTemplate } from "../email-template";
+import { EmailTemplate, emailContext } from "../email-template";
 import { defaultText, h1 } from "../styles";
 
 interface VerifyEmailProps {
@@ -14,7 +13,7 @@ interface VerifyEmailProps {
 export default function VerifyEmail({
   verificationCode = "596853"
 }: VerifyEmailProps) {
-  const emailContext = useContext(EmailContext)
+
   return (
     <EmailTemplate>
       <EmailTemplate.Preview>Email Verification</EmailTemplate.Preview>
