@@ -1,7 +1,19 @@
 ## Pre-requisite
-- Docker. Local postgres is launch using the compose file
+- Docker. Local postgres is launched using the compose file
 
 rename `.env.example` to `.env.local` and set appropriate values
+
+## About
+A starter template that has following built-in
+- [x] authentication password and google oauth
+- [x] sending out email
+- [x] auto generate forms using zod schema
+
+And following planned
+- [ ] integrate payment
+- [ ] S3 or alternate object store for document storage
+- [ ] notification via telegram api
+
 
 ## Getting Started
 
@@ -26,7 +38,10 @@ npx prisma db push
 ## Dependencies
 
 ### Authentication
-- Lucia
+[Lucia](https://lucia-auth.com/)
+
+### Forms
+Makes use of [AutoForm](https://github.com/vantezzen/auto-form). Generates the form UI from zod schema. 
 
 ### ORM
 - prisma. so that we can change to any of the supported databases. and ofcourse the ease of db migration
