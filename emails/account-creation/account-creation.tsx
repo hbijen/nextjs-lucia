@@ -29,9 +29,8 @@ export const EmailAccountCreation = ({
       <Body style={main}>
         <Container style={container}>
           <Img
-            src={`${baseUrl}/logo/logo.png`}
-            width="40"
-            height="33"
+            src={`${baseUrl}/logo/email-logo.png`}
+            height="100"
             alt="Logo"
           />
           <Section>

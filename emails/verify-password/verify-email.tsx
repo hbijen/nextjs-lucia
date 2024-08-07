@@ -30,9 +30,8 @@ export default function VerifyEmail({
           <Section style={coverSection}>
             <Section style={imageSection}>
               <Img
-                src={`${baseUrl}/logo/logo.png`}
-                width="40"
-                height="33"
+                src={`${baseUrl}/logo/email-logo.png`}
+                height="100"
                 alt="Logo"
               />
             </Section>
