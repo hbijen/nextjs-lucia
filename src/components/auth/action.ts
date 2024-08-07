@@ -1,5 +1,6 @@
 "use server"
 
+import VerifyEmail from "@/emails/verify-password/verify-email"
 import { lucia } from "@/lib/auth"
 import { logger } from "@/lib/logger"
 import { findUserByEmail, generateEmailVerificationCode, passwordHashOptions } from "@/lib/service/auth-service"
@@ -10,7 +11,6 @@ import { hash, verify } from "@node-rs/argon2"
 import { renderAsync } from "@react-email/components"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
-import VerifyEmail from "../../../emails/verify-password/verify-email"
 import { ActionResult } from "../forms/simple-form"
 
 
@@ -57,7 +57,7 @@ export async function signup(_: any, formData: FormData): Promise<ActionResult> 
         return null
     })
     
-    logger.info("user-created", {id: newUser?.id})
+    logger.info("user-created", {userid: newUser?.id})
 
     if (!newUser) {
         return { error: "Unable to create account. Please try again!" }
@@ -107,14 +107,14 @@ export async function signin(_: any, formData: FormData): Promise<ActionResult> 
         const validPassword = await verify(appUser.password!, password, passwordHashOptions);
 
         if (validPassword) {
-            logger.info('Login success: ', appUser?.id)
+            logger.info('login-success', {userid: appUser?.id})
             const session = await lucia.createSession(appUser.id, {});
             const sessionCookie = lucia.createSessionCookie(session.id);
             cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
             return redirect("/");
         }
     }
-    logger.info(`Login failed`, {user_id: appUser?.id})
+    logger.info('login-failed', {userid: appUser?.id})
     return {
         error: "Invalid login. Please try again or contact tech support"
     }

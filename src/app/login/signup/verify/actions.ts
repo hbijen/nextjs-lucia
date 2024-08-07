@@ -35,7 +35,7 @@ export async function confirmCode(_: any, formData: FormData): Promise<ActionRes
         userId: user.id
       }
     }).catch((err: any) => {
-      logger.error("confirmCode", err)
+      logger.error("signup", err)
     })
   
     return redirect('./confirm')

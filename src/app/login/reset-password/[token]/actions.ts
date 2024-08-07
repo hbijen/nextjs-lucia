@@ -35,7 +35,7 @@ export async function changePassword(verifytoken: string, _:any, formData: FormD
             token_hash: tokenHash
         }
     })
-    logger.info("change-password", token?.userId)
+    logger.info("password-change", {userid: token?.userId})
 
     if (token) {
         await prisma.password_reset_token.deleteMany({
@@ -68,7 +68,7 @@ export async function changePassword(verifytoken: string, _:any, formData: FormD
                 id: token.userId
             }
         }).catch((err: any) => {
-            logger.error("changePassword", err)
+            logger.error("password-change", err)
             return {
                 success: "Password update failed. If error persists, Please use forgot password to reset your password."
             }

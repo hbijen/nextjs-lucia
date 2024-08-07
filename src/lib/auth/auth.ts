@@ -48,6 +48,7 @@ type UserSession = {
 
 export const validateRequest = cache(
 	async (): Promise<UserSession> => {
+		"use server";
 		const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null;
 		const NO_SESSION = { user: null, session: null }
 
@@ -66,11 +67,11 @@ export const validateRequest = cache(
 				const sessionCookie = lucia.createBlankSessionCookie();
 				cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 			}
-			logger.verbose('validateRequest', user)
+			logger.verbose('validate-request', user)
 			return {session, user};
 	
 		} catch (err: any) {
-			console.error('validateRequest', err)
+			console.error('validate-request', err)
 		}
 		return NO_SESSION
 	}

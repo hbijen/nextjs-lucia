@@ -1,5 +1,6 @@
 "use server";
 
+import EmailAccountCreation from "@/emails/account-creation/account-creation";
 import { logger } from "@/lib/logger";
 import { AppResponse } from "@/lib/model/app-response";
 import { AppUser, toAppUser } from "@/lib/model/user";
@@ -9,7 +10,6 @@ import { createAppUser, disableUser, saveUser } from "@/lib/service/user-service
 import { renderAsync } from "@react-email/components";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import EmailAccountCreation from "../../../../emails/account-creation/account-creation";
 
 export async function userEnable(formData: FormData) {
     const id = formData.get('user_id') as string
@@ -42,7 +42,7 @@ export async function filterUsers(formData: FormData) {
 }
 
 export async function addUser(aUser: AppUser): Promise<AppResponse<AppUser>> {
-    logger.debug('adduser', aUser)
+    logger.debug('user-add', aUser)
     const validateUser = AppUser.parse(aUser)
 
     const appUser = await findUserByEmail(validateUser.email!)
@@ -86,7 +86,7 @@ export async function sendAccountCreationLink(id: string, name: string, email: s
 
 
 export async function updateUser(id: string, aUser: AppUser): Promise<AppResponse<AppUser | null>> {
-    logger.debug('adduser', aUser)
+    logger.debug('user-update', aUser)
     const validateUser = AppUser.parse(aUser)
 
     const user = await saveUser(id, validateUser)

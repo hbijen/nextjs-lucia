@@ -1,17 +1,17 @@
 "use server";
 
 import { ActionResult } from "@/components/forms/simple-form";
+import EmailResetPassword from "@/emails/reset-password/reset-password";
 import { logger } from "@/lib/logger";
 import { createPasswordResetToken, findUserByEmail } from "@/lib/service/auth-service";
 import { sendMail } from "@/lib/service/mail-service";
 import { renderAsync } from "@react-email/components";
 import { redirect } from "next/navigation";
-import EmailResetPassword from "../../../../emails/reset-password/reset-password";
 
 export async function resetPassword(_: any, formData: FormData): Promise<ActionResult> {
 
     const email = formData.get("email");
-    logger.info('reset-password', email)
+    logger.info('password-reset', {email})
     const emailRegex = /^\S+@\S+\.\S+$/;
     if (
         typeof email !== "string" ||
@@ -26,7 +26,6 @@ export async function resetPassword(_: any, formData: FormData): Promise<ActionR
         };
     }
     const appUser = await findUserByEmail(email)
-    logger.info("appUser.provider ", appUser?.provider)
     if (appUser) {
         // for email based account, if user is inactive/disabled they must be enabled first by an admin
         if (appUser.provider == 'email-password' && appUser.inactive_at == null) {

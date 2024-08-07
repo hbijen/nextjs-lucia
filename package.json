@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "start-db": "docker compose -f dev.yml up -d",
-    "preview-email": "email dev",
+    "preview-email": "email dev --dir ./src/emails",
     "test": "vitest"
   },
   "dependencies": {

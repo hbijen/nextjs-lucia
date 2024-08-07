@@ -1,8 +1,8 @@
-import { cookies } from "next/headers";
-import { OAuth2RequestError } from "arctic";
 import { github, lucia } from "@/lib/auth";
-import { createOAuthAppUser, findUserByUserId } from "@/lib/service/auth-service";
 import { logger } from "@/lib/logger";
+import { createOAuthAppUser, findUserByUserId } from "@/lib/service/auth-service";
+import { OAuth2RequestError } from "arctic";
+import { cookies } from "next/headers";
 
 export async function GET(request: Request): Promise<Response> {
 	const url = new URL(request.url);
@@ -10,10 +10,7 @@ export async function GET(request: Request): Promise<Response> {
 	const state = url.searchParams.get("state");
 	const storedState = cookies().get("oauth_state")?.value ?? null;
 
-    logger.debug("url", url)
-    logger.debug("code", code)
-    logger.debug("state", state)
-    logger.debug("storedState", storedState)
+    logger.debug("github-callback", {url,code,state,storedState})
 
 	if (!code || !state || !storedState || state !== storedState) {
 		return new Response(null, {

@@ -31,7 +31,7 @@ async function sendMail(to: string, subject: string, body: string) {
     logger.info('email-success', info)
     return info
   }).catch((err: any) => {
-    console.error('error-email', err)
+    console.error('email-error', err)
     throw err
   })
 }
