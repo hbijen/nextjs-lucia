@@ -3,13 +3,8 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { lucia } from "@/lib/auth"
-import { logger } from "@/lib/logger"
-import { findUserByEmail, passwordHashOptions } from "@/lib/service/auth-service"
-import { verify } from "@node-rs/argon2"
-import { cookies } from "next/headers"
-import { redirect } from "next/navigation"
-import { ActionResult, SimpleForm } from "../forms/simple-form"
+import { SimpleForm } from "../forms/simple-form"
+import { signin } from "./action"
 
 export function Login() {
 
@@ -58,50 +53,4 @@ export function Login() {
             </SimpleForm>
         </>
     )
-}
-
-async function signin(_: any, formData: FormData): Promise<ActionResult> {
-    "use server"
-    
-    const email = formData.get("email");
-    // username must be between 4 ~ 31 characters, and only consists of lowercase letters, 0-9, -, and _
-    // keep in mind some database (e.g. mysql) are case insensitive
-    const emailRegex = /^\S+@\S+\.\S+$/;
-    if (
-        typeof email !== "string" ||
-        email.length < 3 ||
-        email.length > 31 ||
-        !emailRegex.test(email)
-    ) {
-        logger.debug('emailRegex', emailRegex.test(email as string))
-
-        return {
-            error: "Invalid email"
-        };
-    }
-    const password = formData.get("password");
-    if (typeof password !== "string" || password.length < 6 || password.length > 20) {
-        return {
-            error: "Invalid password"
-        };
-    }
-
-    const appUser = await findUserByEmail(email)
-    if (appUser) {
-        
-        const validPassword = await verify(appUser.password!, password, passwordHashOptions);
-
-        if (validPassword) {
-            logger.info('Login success: ', appUser?.id)
-            const session = await lucia.createSession(appUser.id, {});
-            const sessionCookie = lucia.createSessionCookie(session.id);
-            cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-            return redirect("/");
-        }
-    }
-    logger.info(`Login failed`, {user_id: appUser?.id})
-    return {
-        error: "Invalid email or password."
-    }
-
 }

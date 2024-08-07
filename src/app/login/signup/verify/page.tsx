@@ -21,7 +21,7 @@ export default function VerifyEmail() {
       <CardHeader>
         <CardTitle className="text-xl">Verify Code</CardTitle>
         <CardDescription>
-          Please enter the code you recieved in in your email.
+          Please enter the code you recieved in in your email. Unverified logins will be disabled.
         </CardDescription>
       </CardHeader>
       <CardContent>

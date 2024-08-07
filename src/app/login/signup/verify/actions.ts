@@ -5,10 +5,10 @@ import { lucia, validateRequest } from "@/lib/auth"
 import prisma from "@/lib/db"
 import { logger } from "@/lib/logger"
 import { validVerificationCode } from "@/lib/service/auth-service"
+import { setUserEmailVerified } from "@/lib/service/user-service"
 import { redirect } from "next/navigation"
 
 export async function confirmCode(_: any, formData: FormData): Promise<ActionResult> {
-    "use server"
     const { user } = await validateRequest();
   
       if (!user) {
@@ -25,6 +25,8 @@ export async function confirmCode(_: any, formData: FormData): Promise<ActionRes
         error: "Invalid Code."
       }
     }
+
+    await setUserEmailVerified(user.id)
   
     await lucia.invalidateUserSessions(user.id);
     await prisma.verification_code.deleteMany({

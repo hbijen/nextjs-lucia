@@ -36,8 +36,7 @@ export function AddEditUser({ children }: AddEditUserProps) {
             lastname: "",
             email: "",
             provider: 'email-password',
-            emailVerified: false,
-            inactive_at: new Date()
+            emailVerified: false
         },
     })
 

@@ -28,10 +28,10 @@ async function sendMail(to: string, subject: string, body: string) {
     subject: subject,
     html: body
   }).then(info => {
-    logger.info('Email sent: ', info)
+    logger.info('email-success', info)
     return info
   }).catch((err: any) => {
-    console.error('Email send failed: ', err)
+    console.error('error-email', err)
     throw err
   })
 }

@@ -10,7 +10,7 @@ import {
   Text,
 } from "@react-email/components";
 
-interface EmailResetPasswordProps {
+interface EmailAccountCreationProps {
   userFirstname: string;
   resetPasswordLink: string;
 }
@@ -21,7 +21,7 @@ const appName = process.env.EMAIL_APP_NAME ?? "DemoApp"
 export const EmailAccountCreation = ({
   userFirstname = "User",
   resetPasswordLink = "",
-}: EmailResetPasswordProps) => {
+}: EmailAccountCreationProps) => {
   return (
     <Html>
       <Head />

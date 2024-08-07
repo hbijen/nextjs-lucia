@@ -1,8 +1,8 @@
 "use server"
 
-import prisma from "../db"
 import { Prisma } from '@prisma/client';
 import { z } from "zod";
+import prisma from "../db";
 import { AppUser, toAppUser } from "../model/user";
 import { Paginated, PaginationParams } from "./pagination-service";
 
@@ -103,7 +103,21 @@ export async function createAppUser( user: AppUser ) {
             firstname: user.firstname,
             lastname: user.lastname,
             emailVerified: user.emailVerified,
-            inactive_at: user.inactive_at
+            inactive_at: user.inactive_at,
+            password: user.password
         }
     })
+}
+
+export async function setUserEmailVerified( userid: string ) {
+    return prisma.users.update(
+        {
+            data: { 
+                emailVerified: true,
+                inactive_at: null
+            },
+            where: { id: userid }
+        }
+    )
+
 }

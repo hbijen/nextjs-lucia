@@ -10,18 +10,8 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { lucia } from "@/lib/auth"
-import { logger } from "@/lib/logger"
-import { findUserByEmail, generateEmailVerificationCode, passwordHashOptions } from "@/lib/service/auth-service"
-import { sendMail } from "@/lib/service/mail-service"
-import { createAppUser } from "@/lib/service/user-service"
-import { validEmail } from "@/lib/utils"
-import { hash } from "@node-rs/argon2"
-import { renderAsync } from "@react-email/components"
-import { cookies } from "next/headers"
-import { redirect } from "next/navigation"
-import VerifyEmail from "../../../emails/verify-password/verify-email"
-import { ActionResult, SimpleForm } from "../forms/simple-form"
+import { SimpleForm } from "../forms/simple-form"
+import { signup } from "./action"
 import { SignupProps } from "./types"
 
 
@@ -75,65 +65,4 @@ export function Signup01(props: SignupProps) {
             </CardContent>
         </Card>
     )
-}
-
-async function signup(_: any, formData: FormData): Promise<ActionResult> {
-    "use server";
-    const firstname = formData.get("firstname");
-    const lastname = formData.get("lastname");
-    const email = formData.get("email");
-    // username must be between 4 ~ 31 characters, and only consists of lowercase letters, 0-9, -, and _
-    // keep in mind some database (e.g. mysql) are case insensitive
-    if (
-        typeof email !== "string" ||
-        email.length < 3 ||
-        email.length > 31 ||
-        !validEmail(email)
-    ) {
-        return {
-            error: "Invalid email"
-        };
-    }
-    const password = formData.get("password");
-    if (typeof password !== "string" || password.length < 6 || password.length > 20) {
-        return {
-            error: "Invalid password"
-        };
-    }
-    // check if user is already used
-    const appUser = await findUserByEmail(email)
-    if (appUser) {
-        return {
-            error: "Duplicate email exists."
-        }
-    }
-    const passwordHash = await hash(password, passwordHashOptions);
-    const newUser = await createAppUser({
-        email: email,
-        password: passwordHash,
-        firstname: firstname as string,
-        lastname: lastname as string,
-        emailVerified: false,
-        inactive_at: new Date()
-    }).catch((err: any) => {
-        logger.error("create user error===============", err)
-        logger.error("create user error+++++++++++++", JSON.stringify(err))
-        return null
-    })
-    
-    logger.info("user-created", {id: newUser?.id})
-
-    if (!newUser) {
-        return { error: "Unable to create account. Please try again!" }
-    }
-    
-    const verificationCode = await generateEmailVerificationCode(newUser.id);
-    const tmpl = <VerifyEmail verificationCode={verificationCode}></VerifyEmail>
-    await sendMail(email, "Account Creation", await renderAsync(tmpl))
-
-    const session = await lucia.createSession(newUser.id, {});
-    const sessionCookie = lucia.createSessionCookie(session.id);
-    cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-
-    return redirect('./signup/verify')
 }
